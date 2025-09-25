@@ -30,6 +30,19 @@ namespace Bib_Mulinski_Piotr
 			Name = name;
 		}
 
+
+		public Book? FindBookByIsbn(string isbn)
+		{
+			if (isbn.Length != 10 && isbn.Length != 13) 
+			{ 
+				Console.WriteLine("ISBN moet 10 of 13 karakters lang zijn!");
+				return null;
+			}
+
+            Book? book = LibraryAllBooks.Find(el => el.Isbn == isbn);
+            return book;
+        }
+
 		public Book? FindBookByNameAndAuthor(string title, string author)
 		{
 			Book? book = LibraryAllBooks.Find(el => el.Title == title && el.Author == author);

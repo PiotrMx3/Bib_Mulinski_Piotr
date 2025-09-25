@@ -106,21 +106,42 @@
                 library
             );
 
+            // TODO: logic for switch case find book by ISBN
+
+
+            //Console.WriteLine("Geef het ISBN-nummer van het gewenste boek in");
+            //string isbnFromUser = Console.ReadLine();
+            //Book? foundedBook = library.FindBookByIsbn(isbnFromUser);
+
+            //if (foundedBook != null)
+            //{
+            //    Console.WriteLine();
+            //    Console.WriteLine("Boek gevonden! ");
+            //    Console.WriteLine();
+            //    Console.WriteLine($"{foundedBook.Describe()}");
+
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Boek niet gevonden.");
+            //}
 
 
 
             // TODO: logic for switch case find book by title and author
 
-            //Console.WriteLine("Geef de Titel van gewenste book ?");
+            //Console.WriteLine("Geef de titel van het gewenste boek in:?");
             //string title = Console.ReadLine();
-            //Console.WriteLine("Geef de Auteur van gewenste book ?");
+            //Console.WriteLine("Geef de Auteur van het gewenste boek in:");
             //string author = Console.ReadLine();
 
             //Book? foundedBook = library.FindBookByNameAndAuthor(title, author);
 
-            //if(foundedBook != null)
+            //if (foundedBook != null)
             //{
+            //    Console.WriteLine();
             //    Console.WriteLine("Boek gevonden! ");
+            //    Console.WriteLine();
             //    Console.WriteLine($"Omschirijng \n {foundedBook.Describe()}");
             //}
             //else
@@ -143,7 +164,7 @@
             //    library.ShowBooksShort();
 
             //    Console.WriteLine();
-            //    Console.WriteLine("Geef een GUID om een boek te vewijderen");
+            //    Console.WriteLine("Geef een GUID in om een boek te vewijderen");
 
             //    string guid = Console.ReadLine() ?? "";
 
