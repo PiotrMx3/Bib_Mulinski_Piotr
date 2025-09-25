@@ -18,7 +18,23 @@
 
         public static void DemoForTessting()
         {
-            Library library = new("SchoolProject");
+            //string bibName = "";
+
+            //do
+            //{
+            //    Console.WriteLine("Welkom bij het bibliotheekbeheersysteem. Om te beginne geef de naam van jouw bib in.");
+            //    bibName = Console.ReadLine() ?? "";
+
+            //    if (string.IsNullOrWhiteSpace(bibName)) Console.WriteLine("Naam van bib mag niet leeg zijn !");
+            //    Console.WriteLine();
+
+            //} while (bibName == "");
+
+
+            //Library library = new(bibName);
+
+            Library library = new("bib");
+
 
             Book book1 = new Book(
                 "9788324060000",
@@ -91,27 +107,54 @@
             );
 
 
-            if (library.LibraryAllBooks.Count == 0)
-            {
-                Console.WriteLine("Geen boeken in de bibliotheen");
-                return;
-            }
 
-            library.ShowBooksShort();
 
-            Console.WriteLine();
-            Console.WriteLine("Geef een GUID om een boek te vewijderen");
+            // TODO: logic for switch case find book by title and author
 
-            string guid = Console.ReadLine() ?? "";
+            //Console.WriteLine("Geef de Titel van gewenste book ?");
+            //string title = Console.ReadLine();
+            //Console.WriteLine("Geef de Auteur van gewenste book ?");
+            //string author = Console.ReadLine();
 
-            Console.WriteLine();
-            Console.WriteLine($"{library.RemoveBookFromLibrary(guid)}");
+            //Book? foundedBook = library.FindBookByNameAndAuthor(title, author);
 
-            Console.WriteLine();
-            library.ShowBooksShort();
+            //if(foundedBook != null)
+            //{
+            //    Console.WriteLine("Boek gevonden! ");
+            //    Console.WriteLine($"Omschirijng \n {foundedBook.Describe()}");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Boek niet gevonden.");
+            //}
+
+
+
+
+
+            // TODO: logic for switch case remove book.
+
+            //    if (library.LibraryAllBooks.Count == 0)
+            //    {
+            //        Console.WriteLine("Geen boeken in de bibliotheen");
+            //        return;
+            //    }
+
+            //    library.ShowBooksShort();
+
+            //    Console.WriteLine();
+            //    Console.WriteLine("Geef een GUID om een boek te vewijderen");
+
+            //    string guid = Console.ReadLine() ?? "";
+
+            //    Console.WriteLine();
+            //    Console.WriteLine($"{library.RemoveBookFromLibrary(guid)}");
+
+            //    Console.WriteLine();
+            //    library.ShowBooksShort();
 
         }
 
-     }
+    }
 
 }

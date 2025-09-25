@@ -30,6 +30,11 @@ namespace Bib_Mulinski_Piotr
 			Name = name;
 		}
 
+		public Book? FindBookByNameAndAuthor(string title, string author)
+		{
+			Book? book = LibraryAllBooks.Find(el => el.Title == title && el.Author == author);
+			return book;
+		}
         public string RemoveBookFromLibrary(string guid)
         {	
 	
