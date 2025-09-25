@@ -9,7 +9,7 @@ namespace Bib_Mulinski_Piotr
     internal class BooksEnums
     {
        public enum Genre
-        {
+       {
             Unknown,
             Fiction, 
             NonFiction,
@@ -19,13 +19,13 @@ namespace Bib_Mulinski_Piotr
             History,
             Education,
             Children,
-            Crime 
-        }
+            Crime
+       }
        public enum Cover
-        {
+       {
             Hardcover,
-            Paperback 
-        }
+            Paperback
+       }
 
 
         public enum Language
@@ -77,7 +77,14 @@ namespace Bib_Mulinski_Piotr
             Sweden,
             Norway,
             Denmark,
-            Finland
+            Finland,
+            Egypt,
+            Turkey,
+            Greece,
+            CzechRepublic,
+            Slovakia,      
+            Hungary
         }
+
     }
 }

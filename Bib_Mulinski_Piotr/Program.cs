@@ -4,23 +4,114 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            try
+            {
+                DemoForTessting();
+            }
+            catch (Exception e)
+            {
 
-            var book = new Book(
-    "9788324060000",
-    "Pan Tadeusz",
-    "Adam Mickiewicz",
-    "PWN",
-    BooksEnums.Genre.History,
-    new DateTime(1834, 1, 1),
-    340,
-    BooksEnums.Language.Polish,
-    BooksEnums.Cover.Hardcover,
-    BooksEnums.Country.Poland
-);
-
-            Console.WriteLine(book.Describe());
+                Console.WriteLine(e.Message);
+            }
 
         }
-    }
+
+        public static void DemoForTessting()
+        {
+            Library library = new("SchoolProject");
+
+            Book book1 = new Book(
+                "9788324060000",
+                "Pan Tadeusz",
+                "Adam Mickiewicz",
+                "PWN",
+                BooksEnums.Genre.History,
+                new DateTime(1834, 1, 1),
+                340,
+                BooksEnums.Language.Polish,
+                BooksEnums.Cover.Hardcover,
+                BooksEnums.Country.Poland,
+                library
+            );
+
+            Book book2 = new Book(
+                "9780007525546",
+                "In de Ban van de Ring",
+                "J.R.R. Tolkien",
+                "HarperCollins",
+                BooksEnums.Genre.Fantasy,
+                new DateTime(1954, 7, 29),
+                423,
+                BooksEnums.Language.English,
+                BooksEnums.Cover.Paperback,
+                BooksEnums.Country.UnitedKingdom,
+                library
+            );
+
+            Book book3 = new Book(
+                "9789027439642",
+                "Max Havelaar",
+                "Multatuli",
+                "Uitgeverij Bert Bakker",
+                BooksEnums.Genre.Fiction,
+                new DateTime(1860, 1, 1),
+                312,
+                BooksEnums.Language.Dutch,
+                BooksEnums.Cover.Hardcover,
+                BooksEnums.Country.Netherlands,
+                library
+            );
+
+            Book book4 = new Book(
+                "9782070408503",
+                "Les Misérables",
+                "Victor Hugo",
+                "Gallimard",
+                BooksEnums.Genre.History,
+                new DateTime(1862, 1, 1),
+                1232,
+                BooksEnums.Language.French,
+                BooksEnums.Cover.Hardcover,
+                BooksEnums.Country.France,
+                library
+            );
+
+            Book book5 = new Book(
+                "9780140449136",
+                "De Odyssee",
+                "Homer",
+                "Penguin Classics",
+                BooksEnums.Genre.Fiction,
+                new DateTime(1401, 1, 1),
+                541,
+                BooksEnums.Language.Greek,
+                BooksEnums.Cover.Paperback,
+                BooksEnums.Country.Greece,
+                library
+            );
+
+
+            if (library.LibraryAllBooks.Count == 0)
+            {
+                Console.WriteLine("Geen boeken in de bibliotheen");
+                return;
+            }
+
+            library.ShowBooksShort();
+
+            Console.WriteLine();
+            Console.WriteLine("Geef een GUID om een boek te vewijderen");
+
+            string guid = Console.ReadLine() ?? "";
+
+            Console.WriteLine();
+            Console.WriteLine($"{library.RemoveBookFromLibrary(guid)}");
+
+            Console.WriteLine();
+            library.ShowBooksShort();
+
+        }
+
+     }
+
 }
