@@ -33,6 +33,8 @@ namespace Bib_Mulinski_Piotr
 
 		public Book? FindBookByIsbn(string isbn)
 		{
+			isbn = isbn.Trim();
+
 			if (isbn.Length != 10 && isbn.Length != 13) 
 			{ 
 				Console.WriteLine("ISBN moet 10 of 13 karakters lang zijn!");
