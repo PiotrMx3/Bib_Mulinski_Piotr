@@ -54,6 +54,24 @@ namespace Bib_Mulinski_Piotr
             Finnish
         }
 
+        /// <summary>
+        /// Enum.GetValues<Language>()) geeft een array terug van alle enums is een generice type kan ook met
+        /// 
+        /// Enum.GetValues(typeof(Language)))
+        /// maar moet casting geburen enum.GetValues verwacht een type van values dus typeof(Language)
+        /// 
+        /// </summary>
+        public static void MenuForLang()
+        {
+
+            foreach (Language lang in Enum.GetValues<Language>())
+            {
+                Console.WriteLine($"{(int)lang} - {lang}");
+            }
+
+        }
+
+
         public enum Country
         {
             Unknown,

@@ -17,6 +17,11 @@ namespace Bib_Mulinski_Piotr
 			private set { _libraryAllBooks = value; }
 		}
 
+		public Library(string name)
+		{
+			if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Naam van Bib mag niet leeg zijn !");
+			Name = name;
+		}
 
 		public string Name
 		{
@@ -24,13 +29,16 @@ namespace Bib_Mulinski_Piotr
 			private set { _name = value; }
 		}
 
-		public Library(string name)
+        public List<Book>? AllBooksByLanguage(BooksEnums.Language lang)
+        {
+            return LibraryAllBooks.FindAll(el => el.Language == lang);
+        }
+
+
+        public List<Book>? AllBooksByAuthor(string author)
 		{
-			if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Naam van Bib mag niet leeg zijn !");
-			Name = name;
-		}
-
-
+			return LibraryAllBooks.FindAll(el => el.Author.ToLower() == author.Trim().ToLower());
+        }
 		public Book? FindBookByIsbn(string isbn)
 		{
 			isbn = isbn.Trim();
