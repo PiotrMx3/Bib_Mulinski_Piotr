@@ -35,7 +35,7 @@
 
             Library library = new("bib");
 
-            // Author 1: Adam Mickiewicz
+            //Author 1: Adam Mickiewicz
             Book book1 = new Book("9788324060000", "Pan Tadeusz", "Adam Mickiewicz", "PWN",
                 BooksEnums.Genre.History, new DateTime(1834, 1, 1), 340,
                 BooksEnums.Language.Polish, BooksEnums.Cover.Hardcover, BooksEnums.Country.Poland, library);
@@ -123,45 +123,57 @@
                 BooksEnums.Language.French, BooksEnums.Cover.Hardcover, BooksEnums.Country.France, library);
 
 
+            //TODO: logic for switch case CSVReading
+
+            library.ReadBooksFromCsv("csvBooks.txt", library);
+
+            foreach (var item in library.LibraryAllBooks)
+            {
+                Console.WriteLine($"{item.Describe()}");
+               
+            }
+
+
+
             //TODO: logic for switch case find book by Language
 
 
-            Console.WriteLine("In welke taal boeken zoek jij ?");
-            Console.WriteLine();
-            BooksEnums.MenuForLang();
-            Console.WriteLine();
-            Console.WriteLine("Maak een keuze");
-
-            string userInput = Console.ReadLine() ?? "";
+            //Console.WriteLine("In welke taal boeken zoek jij ?");
+            //Console.WriteLine();
+            //BooksEnums.MenuForLang();
+            //Console.WriteLine();
+            //Console.WriteLine("Maak een keuze");
 
 
-            if(int.TryParse(userInput, out int langToCast))
-            {
-                BooksEnums.Language lang = (BooksEnums.Language)langToCast;
+            //string userInput = Console.ReadLine() ?? "";
 
-                if (Enum.IsDefined<BooksEnums.Language>(lang))
-                {
-                    List<Book>? allBooksByLang = library.AllBooksByLanguage(lang);
+            //if (int.TryParse(userInput, out int langToCast))
+            //{
+            //    BooksEnums.Language lang = (BooksEnums.Language)langToCast;
 
-                    if(allBooksByLang != null && allBooksByLang.Count != 0)
-                    {
-                        Console.WriteLine($"Boeken met {lang} als Taal");
-                        Console.WriteLine();
-                        foreach (Book item in allBooksByLang)
-                        {
-                            Console.WriteLine($"{item.Describe()}");
-                        }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Deze taal bestaat niet.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Geef een geldig getal in.");
-            }
+            //    if (Enum.IsDefined<BooksEnums.Language>(lang))
+            //    {
+            //        List<Book>? allBooksByLang = library.AllBooksByLanguage(lang);
+
+            //        if (allBooksByLang != null && allBooksByLang.Count != 0)
+            //        {
+            //            Console.WriteLine($"Boeken met {lang} als Taal");
+            //            Console.WriteLine();
+            //            foreach (Book item in allBooksByLang)
+            //            {
+            //                Console.WriteLine($"{item.Describe()}");
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Deze taal bestaat niet.");
+            //    }
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Geef een geldig getal in.");
+            //}
 
 
 

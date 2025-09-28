@@ -8,25 +8,39 @@ namespace Bib_Mulinski_Piotr
 {
     internal class Library
     {
-		private string _name;
+		private string _name = "";
 		private List<Book> _libraryAllBooks = new();
 
-		public List<Book> LibraryAllBooks
-		{
-			get { return _libraryAllBooks; }
-			private set { _libraryAllBooks = value; }
-		}
 
 		public Library(string name)
 		{
 			if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Naam van Bib mag niet leeg zijn !");
 			Name = name;
 		}
+		public List<Book> LibraryAllBooks
+		{
+			get { return _libraryAllBooks; }
+			private set { _libraryAllBooks = value; }
+		}
 
-		public string Name
+        public string Name
 		{
 			get { return _name; }
 			private set { _name = value; }
+		}
+
+		public void ReadBooksFromCsv(string path, Library library)
+		{
+			string[] booksFromCsv = File.ReadAllLines(path);
+
+			for (int i = 0; i < booksFromCsv.Length; i++)
+			{
+				string[] booksLine = booksFromCsv[i].Split(',');
+
+				Book newBook = new Book(booksLine[0], booksLine[1], library);
+				
+			}
+
 		}
 
         public List<Book>? AllBooksByLanguage(BooksEnums.Language lang)
