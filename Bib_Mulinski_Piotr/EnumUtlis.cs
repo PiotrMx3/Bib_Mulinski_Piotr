@@ -10,7 +10,7 @@ namespace Bib_Mulinski_Piotr
     internal class EnumUtlis
     {
 
-        public static string ToDutch(Language lang)
+        public static string ToDutchLang(Language lang)
         {
             switch (lang)
             {
@@ -39,7 +39,7 @@ namespace Bib_Mulinski_Piotr
             }
         }
 
-        public static string ToDutch(Genre genre)
+        public static string ToDutchGenre(Genre genre)
         {
             switch (genre)
             {
@@ -56,7 +56,7 @@ namespace Bib_Mulinski_Piotr
             }
         }
 
-        public static string ToDutch(Cover cover)
+        public static string ToDutchCover(Cover cover)
         {
             switch (cover)
             {
@@ -66,7 +66,7 @@ namespace Bib_Mulinski_Piotr
             }
         }
 
-        public static string ToDutch(Country country)
+        public static string ToDutchCountry(Country country)
         {
             switch (country)
             {

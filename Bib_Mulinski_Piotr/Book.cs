@@ -155,13 +155,13 @@ namespace Bib_Mulinski_Piotr
                    $"{"Titel",-20}: {Title}\n" +
                    $"{"Auteur",-20}: {Author}\n" +
                    $"{"Uitgever",-20}: {Publisher ?? "[LEEG]"}\n" +
-                   $"{"Genre",-20}: {Genre}\n" +
-                   $"{"Jaar",-20}: {Year.Year}\n" +
-                   $"{"Paginas",-20}: {Pages}\n" +
-                   $"{"Taal",-20}: {Language}\n" +
-                   $"{"ISBN",-20}: {Isbn}\n" +
-                   $"{"Cover",-20}: {CoverType}\n" +
-                   $"{"Land oorspr.",-20}: {OriginCountry}\n" +
+                   $"{"Genre",-20}: {EnumUtlis.ToDutchGenre(Genre)}\n" +
+                   $"{"Jaar",-20}: {Year}\n" +
+                   $"{"Paginas",-20}: {(Pages == 0 ? "[LEEG]" : Pages)}\n" +
+                   $"{"Taal",-20}: {EnumUtlis.ToDutchLang(Language)}\n" +
+                   $"{"ISBN",-20}: {Isbn ?? "[LEEG]"}\n" +
+                   $"{"Cover",-20}: {EnumUtlis.ToDutchCover(CoverType)}\n" +
+                   $"{"Land oorspr.",-20}: {EnumUtlis.ToDutchCountry(OriginCountry)}\n" +
 				   $"";
         }
 

@@ -15,6 +15,7 @@ namespace Bib_Mulinski_Piotr
         {
 
             _library =  InitBibName();
+
             //MockBooks();
 
             bool isRunning = false;
@@ -94,8 +95,7 @@ namespace Bib_Mulinski_Piotr
             {
                 Book newBook = new Book(userTitle, userAuthor, _library);
                 Console.WriteLine($"Nieuw boek van {newBook.Author} is toegevoegd.");
-
-                Console.WriteLine($"{newBook.Describe()}");
+                Console.WriteLine();
             }
             catch (Exception e)
             {
