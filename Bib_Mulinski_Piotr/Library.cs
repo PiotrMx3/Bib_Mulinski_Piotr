@@ -30,7 +30,27 @@ namespace Bib_Mulinski_Piotr
 			private set { _name = value; }
 		}
 
-		public void ReadBooksFromCsv(string path, Library library)
+
+        public Book? FindBookByGuid(string guid)
+        {
+
+            if (!Guid.TryParse(guid.Trim(), out Guid correctGuid))
+                return null;
+
+            Book? bookToEdit = LibraryAllBooks.Find(el => el.LibraryBookGuid == correctGuid);
+
+            if (bookToEdit != null)
+            {
+                
+                return bookToEdit;
+            }
+
+            return null;
+        }
+
+
+
+        public void ReadBooksFromCsv(string path, Library library)
 		{
 			string[] booksFromCsv = File.ReadAllLines(path);
 
@@ -73,13 +93,13 @@ namespace Bib_Mulinski_Piotr
 		}
 
 
-        public bool RemoveBookFromLibrary(string guid)
+        public bool RemoveBookFromLibraryByGuid(string guid)
         {	
 	
-            if (!Guid.TryParse(guid.Trim(), out Guid correctId))
+            if (!Guid.TryParse(guid.Trim(), out Guid correctGuid))
                 return false;
 
-            Book? bookToRemove = LibraryAllBooks.Find(el => el.LibraryBookId == correctId);
+            Book? bookToRemove = LibraryAllBooks.Find(el => el.LibraryBookGuid == correctGuid);
 
             if (bookToRemove != null)
             {

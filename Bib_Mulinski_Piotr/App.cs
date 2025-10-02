@@ -16,7 +16,7 @@ namespace Bib_Mulinski_Piotr
 
             _library =  InitBibName();
 
-            //MockBooks();
+            MockBooks();
 
             bool isRunning = false;
 
@@ -35,7 +35,7 @@ namespace Bib_Mulinski_Piotr
                 //Console.WriteLine("0. Exit");
                 //Console.Write("Maak een keuze: ");
 
-                string userChoice = Console.ReadLine() ?? "".Trim();
+                string userChoice = (Console.ReadLine() ?? "").Trim();
 
                 switch (userChoice)
                 {
@@ -44,7 +44,7 @@ namespace Bib_Mulinski_Piotr
                         break;
 
                     case "2":
-                        AddInfoToBookUi();
+                        EditInfoToBookUi();
                         break;
                     default:
                         Console.WriteLine("Ongeldige keuze.");
@@ -58,21 +58,34 @@ namespace Bib_Mulinski_Piotr
         }
 
 
-        private void AddInfoToBookUi()
+        private void EditInfoToBookUi()
         {
-            Console.WriteLine("Welke boek wil jij bewerken");
+            Console.WriteLine("Welk boek wil je bewerken?");
+            Console.WriteLine();
 
             foreach (Book book in _library.LibraryAllBooks)
             {
                 Console.WriteLine($"{book.ShortDescribe()}");
+                Console.WriteLine();
             }
 
-            Console.WriteLine("Geef een GUID in:");
+            Console.WriteLine("Controleer de GUID aub.");
 
-            string guidToRemove = Console.ReadLine() ?? "";
+            string guidFromUser = (Console.ReadLine() ?? "").Trim();
+
+            Book? bookToEdit = _library.FindBookByGuid(guidFromUser);
 
 
-
+            if(bookToEdit is not null)
+            {
+                //TODO: logic for editing book
+            }
+            else
+            {
+                Console.WriteLine();
+                Console.WriteLine($"Boek niet gevonden controler GUID aub");
+                Console.WriteLine();
+            }
 
 
         }

@@ -32,7 +32,7 @@ namespace Bib_Mulinski_Piotr
 
 			Title = title.Trim();
 			Author = author.Trim();
-            LibraryBookId = Guid.NewGuid();
+            LibraryBookGuid = Guid.NewGuid();
             Library = library;
 
             Library.AddBook(this);
@@ -64,7 +64,7 @@ namespace Bib_Mulinski_Piotr
             Language = language;
             CoverType = coverType;
             OriginCountry = originCountry;
-            LibraryBookId = Guid.NewGuid();
+            LibraryBookGuid = Guid.NewGuid();
 			Library = library;
 
 			Library.AddBook(this);
@@ -76,7 +76,7 @@ namespace Bib_Mulinski_Piotr
 			private set { _library = value; }
 		}
 
-        public Guid LibraryBookId
+        public Guid LibraryBookGuid
         {
 			get { return this._libraryBookId; }
             private set { this._libraryBookId = value; }
@@ -144,14 +144,14 @@ namespace Bib_Mulinski_Piotr
 
         public string ShortDescribe()
         {
-            return $"{Title} - {Author} | ISBN: {Isbn} | GUID: {LibraryBookId}";
+            return $"{Title} - {Author} | ISBN: {Isbn} | GUID: {LibraryBookGuid}";
         }
 
         public string Describe()
         {
             return $"Boek info:\n" +
                    $"{"Bibliotheek",-20}: {Library.Name}\n" +
-                   $"{"LibraryBookId",-20}: {LibraryBookId}\n" +
+                   $"{"LibraryBookId",-20}: {LibraryBookGuid}\n" +
                    $"{"Titel",-20}: {Title}\n" +
                    $"{"Auteur",-20}: {Author}\n" +
                    $"{"Uitgever",-20}: {Publisher ?? "[LEEG]"}\n" +

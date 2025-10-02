@@ -14,5 +14,5 @@
 
 	Zo kan je controleren of de gecaste enumwaarde effectief in de enum bestaat.
 
--- <T>.TryParse(t value, out correctValue) 
+-- <T>.TryParse(value, out <T> correctValue) 
    hiermee kan je veilig controleren of de conversie lukt.
