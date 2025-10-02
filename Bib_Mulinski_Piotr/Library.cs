@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace Bib_Mulinski_Piotr
 		public Library(string name)
 		{
 			if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Naam van Bib mag niet leeg zijn !");
-			Name = name;
+			Name = name.Trim();
 		}
 		public List<Book> LibraryAllBooks
 		{
@@ -53,46 +54,50 @@ namespace Bib_Mulinski_Piotr
 		{
 			return LibraryAllBooks.FindAll(el => el.Author.ToLower() == author.Trim().ToLower());
         }
+
 		public Book? FindBookByIsbn(string isbn)
 		{
-			isbn = isbn.Trim();
 
-			if (isbn.Length != 10 && isbn.Length != 13) 
-			{ 
-				Console.WriteLine("ISBN moet 10 of 13 karakters lang zijn!");
-				return null;
-			}
+			if (isbn.Length != 10 && isbn.Length != 13) return null;
+			//Console.WriteLine("ISBN moet 10 of 13 karakters lang zijn!");
 
-            Book? book = LibraryAllBooks.Find(el => el.Isbn == isbn);
+            Book? book = LibraryAllBooks.Find(el => el.Isbn.ToLower() == isbn.Trim().ToLower());
             return book;
         }
 
+
 		public Book? FindBookByNameAndAuthor(string title, string author)
 		{
-			Book? book = LibraryAllBooks.Find(el => el.Title == title && el.Author == author);
+			Book? book = LibraryAllBooks.Find(el => el.Title.ToLower() == title.Trim().ToLower() && el.Author.ToLower() == author.Trim().ToLower());
 			return book;
 		}
-        public string RemoveBookFromLibrary(string guid)
+
+
+        public bool RemoveBookFromLibrary(string guid)
         {	
 	
             if (!Guid.TryParse(guid.Trim(), out Guid correctId))
-                return "GUID is niet correct.";
+                return false;
 
             Book? bookToRemove = LibraryAllBooks.Find(el => el.LibraryBookId == correctId);
 
             if (bookToRemove != null)
             {
                 LibraryAllBooks.Remove(bookToRemove);
-                return $"Boek met GUID {bookToRemove.LibraryBookId} is succesvol verwijderd.";
+				return true;
             }
 
-            return "Geen boek gevonden met dit GUID.";
+            return false;
         }
+
 
         public void AddBook(Book book) 
 		{
+			if (book is null) return;
+
 			LibraryAllBooks.Add(book);
 		}
+
 
 		public void ShowBooksShort()
 		{

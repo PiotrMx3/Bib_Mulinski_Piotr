@@ -1,0 +1,18 @@
+
+-- REFERENCE TYPES kunnen gecontroleerd worden met ??
+
+-- VALUE TYPES: type.HasValue ? type.Value : "Geen waarde"
+
+-- Enum.GetValues<Language>()) geeft een array terug van alle enums is een generice type 
+
+
+-- Enum.GetValues(typeof(Language))) maar moet casting geburen enum.GetValues verwacht een type van values dus typeof(Language)
+
+-- BooksEnums.Language lang = (BooksEnums.Language)langToCast;
+	
+	Met if (Enum.IsDefined<BooksEnums.Language>(lang)) krijg je true of false. 
+
+	Zo kan je controleren of de gecaste enumwaarde effectief in de enum bestaat.
+
+-- <T>.TryParse(t value, out correctValue) 
+   hiermee kan je veilig controleren of de conversie lukt.

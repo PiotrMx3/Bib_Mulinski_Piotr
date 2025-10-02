@@ -12,12 +12,12 @@ namespace Bib_Mulinski_Piotr
 		private string _title;
 		private string _author;
 		private string _publisher;
-		private BooksEnums.Genre _genre;
+		private BooksEnums.Genre _genre = BooksEnums.Genre.Unknown;
 		private DateTime _year;
 		private int _pages;
-		private BooksEnums.Language _language;
-		private BooksEnums.Cover _coverType;
-		private BooksEnums.Country _originCountry;
+		private BooksEnums.Language _language = BooksEnums.Language.Unknown;
+		private BooksEnums.Cover _coverType = BooksEnums.Cover.Unknown;
+		private BooksEnums.Country _originCountry = BooksEnums.Country.Unknown;
 		private Guid _libraryBookId;
 		private Library _library;
 
@@ -30,8 +30,8 @@ namespace Bib_Mulinski_Piotr
             if (string.IsNullOrWhiteSpace(title)) throw new ArgumentException("Titel van boek mag niet leeg zijn !");
             if (string.IsNullOrWhiteSpace(author)) throw new ArgumentException("Auteur van boek mag niet leeg zijn !");
 
-            Title = title;
-            Author = author;
+			Title = title.Trim();
+			Author = author.Trim();
             LibraryBookId = Guid.NewGuid();
             Library = library;
 
@@ -48,17 +48,16 @@ namespace Bib_Mulinski_Piotr
 
 			if(string.IsNullOrWhiteSpace(isbn)) throw new ArgumentException("ISBN van boek mag niet leeg zijn !");
 			if(isbn.Length != 10 && isbn.Length != 13) throw new ArgumentException("ISBN moet 10 of 13 karakters lang zijn!");
-
 			if(string.IsNullOrWhiteSpace(title)) throw new ArgumentException("Titel van boek mag niet leeg zijn !");
             if(string.IsNullOrWhiteSpace(author)) throw new ArgumentException("Auteur van boek mag niet leeg zijn !");
             if(string.IsNullOrWhiteSpace(publisher)) throw new ArgumentException("Uitgever van boek mag niet leeg zijn !");
 			if(year.Year < 1400 || year.Year > DateTime.Now.Year) throw new ArgumentException("Ongeldig jaar van boek.");
 
 
-            Isbn = isbn;
-            Title = title;
-            Author = author;
-            Publisher = publisher;
+            Isbn = isbn.Trim();
+            Title = title.Trim();
+            Author = author.Trim();
+            Publisher = publisher.Trim();
             Genre = genre;
             Year = year;
             Pages = pages;
@@ -151,11 +150,11 @@ namespace Bib_Mulinski_Piotr
         public string Describe()
         {
             return $"Boek info:\n" +
-                   $"{"Bibliotheek",-20}: {Library}\n" +
+                   $"{"Bibliotheek",-20}: {Library.Name}\n" +
                    $"{"LibraryBookId",-20}: {LibraryBookId}\n" +
                    $"{"Titel",-20}: {Title}\n" +
                    $"{"Auteur",-20}: {Author}\n" +
-                   $"{"Uitgever",-20}: {Publisher ?? "Geen Uitgever"}\n" +
+                   $"{"Uitgever",-20}: {Publisher ?? "[LEEG]"}\n" +
                    $"{"Genre",-20}: {Genre}\n" +
                    $"{"Jaar",-20}: {Year.Year}\n" +
                    $"{"Paginas",-20}: {Pages}\n" +

@@ -22,7 +22,7 @@ namespace Bib_Mulinski_Piotr
             Crime
        }
        public enum Cover
-       {
+       {    Unknown,
             Hardcover,
             Paperback
        }
