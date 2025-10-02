@@ -48,7 +48,7 @@
 
             //Console.WriteLine("In welke taal boeken zoek jij ?");
             //Console.WriteLine();
-            //BooksEnums.MenuForLang();
+            //EnumUtlis.MenuForLang();
             //Console.WriteLine();
             //Console.WriteLine("Maak een keuze");
 

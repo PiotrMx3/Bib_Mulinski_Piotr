@@ -94,6 +94,8 @@ namespace Bib_Mulinski_Piotr
             {
                 Book newBook = new Book(userTitle, userAuthor, _library);
                 Console.WriteLine($"Nieuw boek van {newBook.Author} is toegevoegd.");
+
+                Console.WriteLine($"{newBook.Describe()}");
             }
             catch (Exception e)
             {
