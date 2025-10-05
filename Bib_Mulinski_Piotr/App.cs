@@ -21,6 +21,38 @@ namespace Bib_Mulinski_Piotr
 
         }
 
+        //UML aanpassen FindBookByNameAndAuthorUi()
+        private void FindBookByNameAndAuthorUi()
+        {
+            Logger.LogInfo("Zoek een boek op basis van titel en auteur.");
+            Console.WriteLine();
+
+            Console.Write("Geef de titel van het boek in: ");
+            string titleFromUser = (Console.ReadLine() ?? "").Trim();
+
+            Console.Write("Geef de auteur van het boek in: ");
+            string authorFromUser = (Console.ReadLine() ?? "").Trim();
+
+            Book? foundedBook = _library.FindBookByNameAndAuthor(titleFromUser,authorFromUser);
+
+            if(foundedBook is not null)
+            {
+                Logger.LogInfo("Gegevens van het gevonden boek: ");
+                Console.WriteLine();
+                Console.WriteLine($"{foundedBook.Describe()}");
+            }
+
+            else
+            {
+                Console.WriteLine();
+                Logger.LogError("Geen resultaten gevonden.");
+                Console.WriteLine();
+            }
+
+
+
+        }
+
         //TODO: UML aanpassen ShowBookEditMenu()
         private void ShowBookEditMenuUi(Book book)
         {
@@ -194,8 +226,6 @@ namespace Bib_Mulinski_Piotr
             }
 
 
-
-
         }
 
         private void EditInfoBookUi()
@@ -286,7 +316,7 @@ namespace Bib_Mulinski_Piotr
                 Console.WriteLine("==== Bib Menu ====");
                 Console.WriteLine("1. Boek toevoegen op basis van titel en auteur");
                 Console.WriteLine("2. Info van een boek aanpassen");
-                //Console.WriteLine("3. Alle info tonen op basis van titel en auteur");
+                Console.WriteLine("3. Alle info tonen op basis van titel en auteur");
                 //Console.WriteLine("4. Boek zoeken (submenu)");
                 //Console.WriteLine("5. Boek verwijderen");
                 //Console.WriteLine("6. Alle boeken tonen");
@@ -304,9 +334,11 @@ namespace Bib_Mulinski_Piotr
                     case "1":
                         AddBookBytitleAndAuthorUi();
                         break;
-
                     case "2":
                         EditInfoBookUi();
+                        break;
+                    case "3":
+                        FindBookByNameAndAuthorUi();
                         break;
                     case "0":
                         isRunning = false;
@@ -319,7 +351,6 @@ namespace Bib_Mulinski_Piotr
             }
 
             Console.WriteLine();
-
 
         }
 

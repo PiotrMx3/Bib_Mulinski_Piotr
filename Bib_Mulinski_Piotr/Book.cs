@@ -182,7 +182,7 @@ namespace Bib_Mulinski_Piotr
         {
             return $"Boek info:\n" +
                    $"{"Bibliotheek",-20}: {Library.Name}\n" +
-                   $"{"LibraryBookId",-20}: {LibraryBookGuid}\n" +
+                   $"{"LibraryBoekId",-20}: {LibraryBookGuid}\n" +
                    $"{"Titel",-20}: {Title}\n" +
                    $"{"Auteur",-20}: {Author}\n" +
                    $"{"Uitgever",-20}: {Publisher ?? "[LEEG]"}\n" +
