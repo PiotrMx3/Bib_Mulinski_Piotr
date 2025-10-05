@@ -21,19 +21,12 @@ namespace Bib_Mulinski_Piotr
 		private Guid _libraryBookId;
 		private Library _library;
 
-
-
-
-
 		public Book (string title, string author, Library library)
 		{
-            if (string.IsNullOrWhiteSpace(title)) throw new ArgumentException("Titel van boek mag niet leeg zijn !");
-            if (string.IsNullOrWhiteSpace(author)) throw new ArgumentException("Auteur van boek mag niet leeg zijn !");
-
 			Title = title.Trim();
 			Author = author.Trim();
-            LibraryBookGuid = Guid.NewGuid();
             Library = library;
+            LibraryBookGuid = Guid.NewGuid();
 
             Library.AddBook(this);
         }
@@ -45,14 +38,6 @@ namespace Bib_Mulinski_Piotr
 		)
 
 		{
-
-			if(string.IsNullOrWhiteSpace(isbn)) throw new ArgumentException("ISBN van boek mag niet leeg zijn !");
-			if(isbn.Length != 10 && isbn.Length != 13) throw new ArgumentException("ISBN moet 10 of 13 karakters lang zijn!");
-			if(string.IsNullOrWhiteSpace(title)) throw new ArgumentException("Titel van boek mag niet leeg zijn !");
-            if(string.IsNullOrWhiteSpace(author)) throw new ArgumentException("Auteur van boek mag niet leeg zijn !");
-            if(string.IsNullOrWhiteSpace(publisher)) throw new ArgumentException("Uitgever van boek mag niet leeg zijn !");
-			if(year.Year < 1400 || year.Year > DateTime.Now.Year) throw new ArgumentException("Ongeldig jaar van boek.");
-
 
             Isbn = isbn.Trim();
             Title = title.Trim();
@@ -109,7 +94,11 @@ namespace Bib_Mulinski_Piotr
 		public DateTime Year
 		{
 			get { return _year; }
-			private set { _year = value; }
+			private set
+			{
+                if (value.Year < 1400 || value.Year > DateTime.Now.Year) throw new ArgumentException("Ongeldig jaar van boek.");
+                _year = value;
+			}
 		}
 
 		public BooksEnums.Genre Genre
@@ -117,34 +106,76 @@ namespace Bib_Mulinski_Piotr
 			get { return _genre; }
 			private set {  _genre= value; }
 		}
+
+        //TODO: UML ANNAPSSEN ChangeGenre()
+        public void ChangeGenre(BooksEnums.Genre newGenre)
+		{
+			Genre = newGenre;
+		}
+
         public string Publisher
         {
             get { return _publisher; }
-            private set { _publisher = value; }
+            private set 
+			{
+				if(string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Uitgever van boek mag niet leeg zijn !");
+                _publisher = value; 
+			}
         }
+
+        //TODO: UML ANNAPSSEN ChangePublisher()
+
+		public void ChangePublisher(string newPublisher)
+		{
+			Publisher = newPublisher;
+		}
 
         public string Author
 		{
 			get { return _author; }
-			private set { _author = value; }
+			private set
+			{
+                if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Auteur van boek mag niet leeg zijn !");
+				_author = value; 
+			}
+		}
+        //TODO: UML ANNAPSSEN ChangeAuthor()
+        public void ChangeAuthor(string newAuthor)
+		{
+			Author = newAuthor;
 		}
 
 		public string Title
 		{
 			get { return _title; }
-			private set { _title = value; }
+			private set
+			{
+                if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Titel van boek mag niet leeg zijn !");
+                _title = value;
+			}
+		}
+
+        //TODO: UML ANNAPSSEN ChangeTitle()
+        public void ChangeTitle(string newTitle)
+		{
+			Title = newTitle;
 		}
 
 		public string Isbn
 		{
 			get { return _isbn; }
-			private set { _isbn = value; }
-		}
+			private set
+			{
+                if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("ISBN van boek mag niet leeg zijn !");
+                if (value.Length != 10 && value.Length != 13) throw new ArgumentException("ISBN moet 10 of 13 karakters lang zijn!");
 
+                _isbn = value;
+			}
+		}
 
         public string ShortDescribe()
         {
-            return $"{Title} - {Author} | ISBN: {Isbn} | GUID: {LibraryBookGuid}";
+            return $"{Title} - {Author} | ISBN: {Isbn ?? "[LEEG]"} | GUID: {LibraryBookGuid}";
         }
 
         public string Describe()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Bib_Mulinski_Piotr
 {
@@ -13,55 +14,200 @@ namespace Bib_Mulinski_Piotr
 
         public void Run()
         {
-
-            _library =  InitBibName();
+            _library = InitBibNameUi();
 
             MockBooks();
+            ShowBibMenuUi();
 
-            bool isRunning = false;
+        }
 
-            while (!isRunning)
+        //TODO: UML aanpassen ShowBookEditMenu()
+        private void ShowBookEditMenuUi(Book book)
+        {
+            bool isRunning = true;
+
+            while (isRunning)
             {
-                ShowBibMenu();
 
-                //Console.WriteLine("==== BIB MENU ====");
-                //Console.WriteLine("1. Boek toevoegen op basis van titel en auteur");
-                //Console.WriteLine("2. Info aan een boek toevoegen");
-                //Console.WriteLine("3. Alle info tonen op basis van titel en auteur");
-                //Console.WriteLine("4. Boek zoeken (submenu)");
-                //Console.WriteLine("5. Boek verwijderen");
-                //Console.WriteLine("6. Alle boeken tonen");
-                //Console.WriteLine("7. CSV inlezen");
-                //Console.WriteLine("0. Exit");
-                //Console.Write("Maak een keuze: ");
+                Console.WriteLine("==== Boekaanpassingsmenu ====");
+                Console.WriteLine("Wat wil je aanpassen?");
+                Console.WriteLine("1. Titel");
+                Console.WriteLine("2. Auteur");
+                Console.WriteLine("3. Uitgever");
+                Console.WriteLine("4. Genre");
+                //Console.WriteLine("5. Jaar van uitgave");
+                //Console.WriteLine("6. Aantal pagina's");
+                //Console.WriteLine("7. Taal");
+                //Console.WriteLine("8. ISBN");
+                //Console.WriteLine("9. Omslag");
+                //Console.WriteLine("10. Land van oorsprong");
+                Console.WriteLine("0. Afsluiten");
 
+
+
+                Console.WriteLine();
+                Console.Write("Maak een keuze: ");
                 string userChoice = (Console.ReadLine() ?? "").Trim();
 
                 switch (userChoice)
                 {
                     case "1":
-                        AddBookBytitleAndAuthorUi();
+                        Console.WriteLine();
+                        Console.WriteLine($"Huidige Titel: {book.Title} ");
+                        Console.WriteLine();
+                        Console.Write("Geef nieuwe Titel in: ");
+                        
+
+                        string newTitle = (Console.ReadLine() ?? "").Trim();
+
+                        try
+                        {
+                            book.ChangeTitle(newTitle);
+                            Console.WriteLine();
+                            Logger.LogSuccess("Titel succesvol gewijzigd!");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine();
+                            Logger.LogError("Fout bij het wijzigen van de titel", e);
+                        }
+
                         break;
 
                     case "2":
-                        EditInfoToBookUi();
+                        Console.WriteLine();
+                        Console.WriteLine($"Huidige Auteur: {book.Author} ");
+                        Console.WriteLine();
+                        Console.Write("Geef nieuwe Auteur in: ");
+
+
+                        string newAuthor = (Console.ReadLine() ?? "").Trim();
+
+                        try
+                        {
+                            book.ChangeAuthor(newAuthor);
+                            Console.WriteLine();
+                            Logger.LogSuccess("Auteur succesvol gewijzigd!");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine();
+                            Logger.LogError("Fout bij het wijzigen van de Auteur", e);
+                        }
+
                         break;
+
+                    case "3":
+                        Console.WriteLine();
+                        Console.WriteLine($"Huidige Uitgever {book.Publisher} ");
+                        Console.WriteLine();
+                        Console.Write("Geef nieuwe Uitgever in: ");
+
+
+                        string newPublisher = (Console.ReadLine() ?? "").Trim();
+
+                        try
+                        {
+                            book.ChangePublisher(newPublisher);
+                            Console.WriteLine();
+                            Logger.LogSuccess("Uitgever succesvol gewijzigd!");
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine();
+                            Logger.LogError("Fout bij het wijzigen van de Uitgever", e);
+                        }
+
+                        break;
+
+                    case "4":
+                        Console.WriteLine();
+                        Console.WriteLine($"Huidig Genre {EnumUtlis.ToDutchGenre(book.Genre)}");
+                        Console.WriteLine();
+                        Logger.LogInfo("Geef een nieuwe Genre in: ");
+                        Console.WriteLine();
+                        Console.WriteLine("Beschikbare opties :");
+                        Console.WriteLine();
+
+                        EnumUtlis.EnumMenuForGenre();
+                        Console.WriteLine();
+                        Console.Write("Kaak een keuze: ");
+
+                        string newGenreChoice = (Console.ReadLine()?? "").Trim();
+
+                        try
+                        {
+                            if(int.TryParse(newGenreChoice, out int parsedValue) && Enum.IsDefined<BooksEnums.Genre>((BooksEnums.Genre)parsedValue))
+                            {
+                                BooksEnums.Genre newGenre = (BooksEnums.Genre)parsedValue;
+
+                                book.ChangeGenre(newGenre);
+
+                                Console.WriteLine();
+                                Logger.LogSuccess("Genre succesvol gewijzigd!");
+                            } else
+                            {
+                                throw new ArgumentException("Gekozen waarde bestaat niet !");
+                            }
+
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine();
+                            Logger.LogError("Fout bij het wijzigen van de Genre", e);
+                        }
+
+                        break;
+
+                    //case "5":
+                    //    Console.WriteLine("Option 5 selected.");
+                    //    break;
+
+                    //case "6":
+                    //    Console.WriteLine("Option 6 selected.");
+                    //    break;
+
+                    //case "7":
+                    //    Console.WriteLine("Option 7 selected.");
+                    //    break;
+
+                    //case "8":
+                    //    Console.WriteLine("Option 8 selected.");
+                    //    break;
+
+                    //case "9":
+                    //    Console.WriteLine("Option 9 selected.");
+                    //    break;
+
+                    //case "10":
+                    //    Console.WriteLine("Option 10 selected.");
+                    //    break;
+                    case "0":
+                        isRunning = false;
+                        break;
+
                     default:
-                        Console.WriteLine("Ongeldige keuze.");
+                        Logger.LogError("Ongeldige keuze. Kies een nummer van 1 tot 4.");
                         break;
                 }
-
+                Console.WriteLine();
             }
 
-            Console.WriteLine();
+
+
 
         }
 
-
-        private void EditInfoToBookUi()
+        private void EditInfoBookUi()
         {
-            Console.WriteLine("Welk boek wil je bewerken?");
-            Console.WriteLine();
+
+            if(_library.LibraryAllBooks.Count == 0)
+            {
+                Logger.LogError("Bibliotheek bevat geen boeken !");
+                Console.WriteLine();
+                return;
+            }
+
 
             foreach (Book book in _library.LibraryAllBooks)
             {
@@ -69,21 +215,29 @@ namespace Bib_Mulinski_Piotr
                 Console.WriteLine();
             }
 
-            Console.WriteLine("Controleer de GUID aub.");
+            Console.WriteLine();
+
+            Logger.LogInfo("Om een boek te bewerken geef een GUID in:");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.Write("Welk boek wil je bewerken ?: ");
 
             string guidFromUser = (Console.ReadLine() ?? "").Trim();
 
             Book? bookToEdit = _library.FindBookByGuid(guidFromUser);
 
+            Console.WriteLine();
 
             if(bookToEdit is not null)
             {
-                //TODO: logic for editing book
+                //TODO: nog metohde maken om infot te bewrken.
+                ShowBookEditMenuUi(bookToEdit);
+                
             }
             else
             {
                 Console.WriteLine();
-                Console.WriteLine($"Boek niet gevonden controler GUID aub");
+                Logger.LogError("Controleer de GUID aub.");
                 Console.WriteLine();
             }
 
@@ -94,25 +248,74 @@ namespace Bib_Mulinski_Piotr
 
         private void AddBookBytitleAndAuthorUi()
         {
-            Console.WriteLine("Geef de titel in:");
+            Console.Write("Geef de titel in: ");
             string userTitle = Console.ReadLine() ?? "";
 
-            Console.WriteLine("Geef de auteur in:");
+            Console.Write("Geef de auteur in: ");
             string userAuthor = Console.ReadLine() ?? "";
             Console.WriteLine();
 
-            // Klasse Book bevat validaties in de constructor.
+            // Klasse Book bevat validaties in de setter.
             // try/catch is gebruikt om fouten af te handelen die kunnen optreden tijdens de initialisatie.
 
             try
             {
                 Book newBook = new Book(userTitle, userAuthor, _library);
-                Console.WriteLine($"Nieuw boek van {newBook.Author} is toegevoegd.");
+
+                Logger.LogSuccess($"Nieuw boek van {newBook.Author} is toegevoegd.");
                 Console.WriteLine();
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Boek niet toegevoegd! {e.Message}");
+
+                Logger.LogError("", e);
+                Console.WriteLine();
+            }
+
+
+
+        }
+
+
+        private  void ShowBibMenuUi()
+        {
+            bool isRunning = true;
+
+            while (isRunning)
+            {
+                Console.WriteLine("==== Bib Menu ====");
+                Console.WriteLine("1. Boek toevoegen op basis van titel en auteur");
+                Console.WriteLine("2. Info van een boek aanpassen");
+                //Console.WriteLine("3. Alle info tonen op basis van titel en auteur");
+                //Console.WriteLine("4. Boek zoeken (submenu)");
+                //Console.WriteLine("5. Boek verwijderen");
+                //Console.WriteLine("6. Alle boeken tonen");
+                //Console.WriteLine("7. CSV inlezen");
+                Console.WriteLine("0. Afsluiten");
+                Console.WriteLine();
+                Console.Write("Maak een keuze: ");
+
+
+                string userChoice = (Console.ReadLine() ?? "").Trim();
+                Console.WriteLine();
+
+                switch (userChoice)
+                {
+                    case "1":
+                        AddBookBytitleAndAuthorUi();
+                        break;
+
+                    case "2":
+                        EditInfoBookUi();
+                        break;
+                    case "0":
+                        isRunning = false;
+                        break;
+                    default:
+                        Logger.LogError("Ongeldige keuze.");
+                        break;
+                }
+
             }
 
             Console.WriteLine();
@@ -121,23 +324,7 @@ namespace Bib_Mulinski_Piotr
         }
 
 
-        private  void ShowBibMenu()
-        {
-            Console.WriteLine("==== BIB MENU ====");
-            Console.WriteLine("1. Boek toevoegen op basis van titel en auteur");
-            Console.WriteLine("2. Info aan een boek toevoegen");
-            //Console.WriteLine("3. Alle info tonen op basis van titel en auteur");
-            //Console.WriteLine("4. Boek zoeken (submenu)");
-            //Console.WriteLine("5. Boek verwijderen");
-            //Console.WriteLine("6. Alle boeken tonen");
-            //Console.WriteLine("7. CSV inlezen");
-            Console.WriteLine("0. Exit");
-            Console.Write("Maak een keuze: ");
-
-        }
-
-
-        private Library InitBibName()
+        private Library InitBibNameUi()
         {
             string bibName = "";
 
@@ -146,7 +333,7 @@ namespace Bib_Mulinski_Piotr
                 Console.WriteLine("Welkom bij het bibliotheekbeheersysteem. Om te beginne geef de naam van jouw bib in.");
                 bibName = Console.ReadLine() ?? "";
 
-                if (string.IsNullOrWhiteSpace(bibName)) Console.WriteLine("Naam van bib mag niet leeg zijn !");
+                if (string.IsNullOrWhiteSpace(bibName)) Logger.LogError("Naam van bib mag niet leeg zijn !");
                 Console.WriteLine();
 
             } while (bibName == "");

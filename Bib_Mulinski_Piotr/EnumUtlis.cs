@@ -61,7 +61,7 @@ namespace Bib_Mulinski_Piotr
             switch (cover)
             {
                 case Cover.Hardcover: return "Hardcover";
-                case Cover.Paperback: return "Paperback";
+                case Cover.Paperback: return "Softcover";
                 default: return "Onbekend";
             }
         }
@@ -110,16 +110,30 @@ namespace Bib_Mulinski_Piotr
         /// maar moet casting geburen enum.GetValues verwacht een type van values dus typeof(Language)
         /// 
         /// </summary>
-        public static void MenuForLang()
+        /// 
+
+
+        //TODO: UML EnumMenuForLang()
+        public static void EnumMenuForLang()
         {
 
-            foreach (Language lang in Enum.GetValues<Language>())
+            foreach (BooksEnums.Language lang in Enum.GetValues<BooksEnums.Language>())
             {
                 Console.WriteLine($"{(int)lang} - {lang}");
             }
 
         }
 
+        //TODO: UML EnumMenuForGenre()
+        public static void EnumMenuForGenre()
+        {
+
+            foreach (BooksEnums.Genre genre in Enum.GetValues<BooksEnums.Genre>())
+            {
+                Console.WriteLine($"{(int)genre} - {genre}");
+            }
+
+        }
 
     }
 }

@@ -16,3 +16,5 @@
 
 -- <T>.TryParse(value, out <T> correctValue) 
    hiermee kan je veilig controleren of de conversie lukt.
+
+

@@ -79,7 +79,6 @@ namespace Bib_Mulinski_Piotr
 		{
 
 			if (isbn.Length != 10 && isbn.Length != 13) return null;
-			//Console.WriteLine("ISBN moet 10 of 13 karakters lang zijn!");
 
             Book? book = LibraryAllBooks.Find(el => el.Isbn.ToLower() == isbn.Trim().ToLower());
             return book;
@@ -111,8 +110,8 @@ namespace Bib_Mulinski_Piotr
         }
 
 
-        public void AddBook(Book book) 
-		{
+        public void AddBook(Book book)
+		{ 
 			if (book is null) return;
 
 			LibraryAllBooks.Add(book);
