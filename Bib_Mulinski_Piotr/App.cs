@@ -21,6 +21,77 @@ namespace Bib_Mulinski_Piotr
 
         }
 
+        //UML aanpassen SearchBookSubMenu()
+        private void SearchBookSubMenuUi()
+        {
+            bool isRunning = true;
+
+            while (isRunning)
+            {
+                Logger.LogInfo("Welkom in het submenu voor het zoeken van boeken");
+                Console.WriteLine();
+                Console.WriteLine();
+
+                Console.WriteLine("1. Zoek een boek op basis van titel en auteur");
+                Console.WriteLine("2. Zoek een boek op basis van ISBN nummer");
+                Console.WriteLine("3. Zoek alle boeken op basis van auteur");
+                Console.WriteLine("4. Zoek alle boeken op basis van taal");
+                Console.WriteLine("0. Afsluiten");
+
+
+                Console.Write("Maak een keuze: ");
+                string userChoice = (Console.ReadLine() ?? "").Trim();
+                Console.WriteLine();
+
+                switch (userChoice)
+                {
+                    case "1":
+                        FindBookByNameAndAuthorUi();
+                        break;
+                    case "2":
+                        Logger.LogInfo("Zoek een boek op basis van ISBN nummer.");
+                        Console.WriteLine();
+
+                        Console.Write("Geef de ISBN nummer van het boek in: ");
+                        string IsbnFromUser = (Console.ReadLine() ?? "").Trim();
+
+
+                        Book? foundedBook = _library.FindBookByIsbn(IsbnFromUser);
+                        Console.WriteLine();
+
+                        if (foundedBook is not null)
+                        {
+                            Logger.LogInfo("Gegevens van het gevonden boek: ");
+                            Console.WriteLine();
+                            Console.WriteLine($"{foundedBook.Describe()}");
+                        }
+
+                        else
+                        {
+                            Console.WriteLine();
+                            Logger.LogError("Geen resultaten gevonden");
+                            Console.WriteLine();
+                            Logger.LogError("Controleer het ISBN nummer");
+                            Console.WriteLine();
+                        }
+
+                        break;
+                    case "0":
+                        isRunning = false;
+                        break;
+                    default:
+                        break;
+                }
+
+
+
+
+
+            }
+
+
+        }
+
         //UML aanpassen FindBookByNameAndAuthorUi()
         private void FindBookByNameAndAuthorUi()
         {
@@ -45,11 +116,9 @@ namespace Bib_Mulinski_Piotr
             else
             {
                 Console.WriteLine();
-                Logger.LogError("Geen resultaten gevonden.");
+                Logger.LogError("Geen resultaten gevonden");
                 Console.WriteLine();
             }
-
-
 
         }
 
@@ -60,7 +129,6 @@ namespace Bib_Mulinski_Piotr
 
             while (isRunning)
             {
-
                 Console.WriteLine("==== Boekaanpassingsmenu ====");
                 Console.WriteLine("Wat wil je aanpassen?");
                 Console.WriteLine("1. Titel");
@@ -156,9 +224,9 @@ namespace Bib_Mulinski_Piotr
                         Console.WriteLine();
                         Console.WriteLine($"Huidig Genre {EnumUtlis.ToDutchGenre(book.Genre)}");
                         Console.WriteLine();
-                        Logger.LogInfo("Geef een nieuwe Genre in: ");
+                        Console.WriteLine("Geef een nieuwe Genre in: ");
                         Console.WriteLine();
-                        Console.WriteLine("Beschikbare opties :");
+                        Console.WriteLine("Beschikbare opties: ");
                         Console.WriteLine();
 
                         EnumUtlis.EnumMenuForGenre();
@@ -219,7 +287,7 @@ namespace Bib_Mulinski_Piotr
                         break;
 
                     default:
-                        Logger.LogError("Ongeldige keuze. Kies een nummer van 1 tot 4.");
+                        Logger.LogError("Ongeldige keuze. Kies een nummer van 1 tot 4");
                         break;
                 }
                 Console.WriteLine();
@@ -247,7 +315,7 @@ namespace Bib_Mulinski_Piotr
 
             Console.WriteLine();
 
-            Logger.LogInfo("Om een boek te bewerken geef een GUID in:");
+            Logger.LogInfo("Om een boek te bewerken geef een GUID in: ");
             Console.WriteLine();
             Console.WriteLine();
             Console.Write("Welk boek wil je bewerken ?: ");
@@ -267,7 +335,7 @@ namespace Bib_Mulinski_Piotr
             else
             {
                 Console.WriteLine();
-                Logger.LogError("Controleer de GUID aub.");
+                Logger.LogError("Controleer de GUID aub");
                 Console.WriteLine();
             }
 
@@ -278,6 +346,9 @@ namespace Bib_Mulinski_Piotr
 
         private void AddBookBytitleAndAuthorUi()
         {
+            Logger.LogInfo("Om een nieuw boek aan te maken geef de titel en auteur in");
+            Console.WriteLine();
+
             Console.Write("Geef de titel in: ");
             string userTitle = Console.ReadLine() ?? "";
 
@@ -292,7 +363,7 @@ namespace Bib_Mulinski_Piotr
             {
                 Book newBook = new Book(userTitle, userAuthor, _library);
 
-                Logger.LogSuccess($"Nieuw boek van {newBook.Author} is toegevoegd.");
+                Logger.LogSuccess($"Nieuw boek van {newBook.Author} is toegevoegd");
                 Console.WriteLine();
             }
             catch (Exception e)
@@ -317,7 +388,7 @@ namespace Bib_Mulinski_Piotr
                 Console.WriteLine("1. Boek toevoegen op basis van titel en auteur");
                 Console.WriteLine("2. Info van een boek aanpassen");
                 Console.WriteLine("3. Alle info tonen op basis van titel en auteur");
-                //Console.WriteLine("4. Boek zoeken (submenu)");
+                Console.WriteLine("4. Boek zoeken (submenu)");
                 //Console.WriteLine("5. Boek verwijderen");
                 //Console.WriteLine("6. Alle boeken tonen");
                 //Console.WriteLine("7. CSV inlezen");
@@ -340,11 +411,14 @@ namespace Bib_Mulinski_Piotr
                     case "3":
                         FindBookByNameAndAuthorUi();
                         break;
+                    case "4":
+                        SearchBookSubMenuUi();
+                        break;
                     case "0":
                         isRunning = false;
                         break;
                     default:
-                        Logger.LogError("Ongeldige keuze.");
+                        Logger.LogError("Ongeldige keuze");
                         break;
                 }
 
@@ -361,7 +435,9 @@ namespace Bib_Mulinski_Piotr
 
             do
             {
-                Console.WriteLine("Welkom bij het bibliotheekbeheersysteem. Om te beginne geef de naam van jouw bib in.");
+                Logger.LogInfo("Welkom bij het bibliotheekbeheersysteem \n" +
+                    "Om te beginne geef de naam van jouw bib in: ");
+
                 bibName = Console.ReadLine() ?? "";
 
                 if (string.IsNullOrWhiteSpace(bibName)) Logger.LogError("Naam van bib mag niet leeg zijn !");
