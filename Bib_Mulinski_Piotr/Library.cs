@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Bib_Mulinski_Piotr
 {
@@ -17,7 +18,6 @@ namespace Bib_Mulinski_Piotr
 
 		public Library(string name)
 		{
-			if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Naam van Bib mag niet leeg zijn !");
 			Name = name.Trim();
 		}
 		public ImmutableList<Book> LibraryAllBooks
@@ -28,7 +28,11 @@ namespace Bib_Mulinski_Piotr
         public string Name
 		{
 			get { return _name; }
-			private set { _name = value; }
+			private set
+			{
+                if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Naam van Bib mag niet leeg zijn !");
+                _name = value;
+			}
 		}
 
 
@@ -51,7 +55,7 @@ namespace Bib_Mulinski_Piotr
 
 
 
-        public void ReadBooksFromCsv(string path, Library library)
+        public void ReadBooksFromCsv(string path)
 		{
 			string[] booksFromCsv = File.ReadAllLines(path);
 
@@ -59,7 +63,12 @@ namespace Bib_Mulinski_Piotr
 			{
 				string[] booksLine = booksFromCsv[i].Split(',');
 
-				Book newBook = new Book(booksLine[0], booksLine[1], library);
+				if (booksLine.Length < 2 || string.IsNullOrWhiteSpace(booksLine[0]) || string.IsNullOrWhiteSpace(booksLine[1]))
+				{
+                    throw new ArgumentException($"Regel {i+1}: onjuist CSV-formaat (verwacht minimaal 2 velden: Titel, Auteur). Corrigeer en probeer het opnieuw.");
+                } 
+
+                Book newBook = new Book(booksLine[0], booksLine[1], this);
 				
 			}
 
@@ -118,9 +127,14 @@ namespace Bib_Mulinski_Piotr
 
 			_libraryAllBooks.Add(book);
 		}
+		
+        public void RollBack(List<Book> books)
+        {
+            _libraryAllBooks = books;
+        }
 
 
-		public void ShowBooksShort()
+        public void ShowBooksShort()
 		{
 			{
 				foreach (Book book in LibraryAllBooks)

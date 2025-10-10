@@ -22,6 +22,49 @@ namespace Bib_Mulinski_Piotr
         }
 
 
+        //TODO: ReadTekstFromCsvUi()
+
+        private void ReadBooksFromCsvUi()
+        {
+            ImmutableList<Book> backup = _library.LibraryAllBooks;
+
+
+            try
+            {
+                _library.ReadBooksFromCsv("csvBooks.txt");
+
+                Logger.LogSuccess($"Er zijn {_library.LibraryAllBooks.Count - backup.Count} boeken met succes toegevoegd!");
+                Console.WriteLine();
+            }
+            catch (Exception e)
+            {
+                _library.RollBack(backup.ToList<Book>());
+                Logger.LogError("Fout bij het inlezen van CSV. Rollback uitgevoerd.", e);
+
+                Console.WriteLine();
+            }
+
+
+        }
+
+
+        //TODO: UML aanpassen ShowAllbooksUi()
+
+        private void ShowAllBooksUi()
+        {
+            Logger.LogInfo("Het totale overzicht van boeken.");
+            Console.WriteLine();
+            Console.WriteLine();
+
+            foreach (Book book in _library.LibraryAllBooks)
+            {
+                Console.WriteLine($"{book.Describe()}");
+            }
+            Console.WriteLine();
+
+        }
+
+
         //TODO: UML aanpassen RemoveBookFromLibraryByGuidUi()
 
         private void RemoveBookFromLibraryByGuidUi()
@@ -35,6 +78,7 @@ namespace Bib_Mulinski_Piotr
 
 
             foreach (Book book in _library.LibraryAllBooks)
+
             {
                 Console.WriteLine($"{book.ShortDescribe()}");
                 Console.WriteLine();
@@ -56,7 +100,7 @@ namespace Bib_Mulinski_Piotr
             if (removed)
             {
                 Console.WriteLine();
-                Logger.LogSuccess($"Boek met GUID: {guidFromUser} is verwijderdt");
+                Logger.LogSuccess($"Boek met GUID: {guidFromUser} is verwijderd");
                 Console.WriteLine();
             }
             else
@@ -67,8 +111,6 @@ namespace Bib_Mulinski_Piotr
             }
 
         }
-
-
 
         //TODO: UML aanpassen SearchBookSubMenu()
         private void SearchBookSubMenuUi()
@@ -119,6 +161,7 @@ namespace Bib_Mulinski_Piotr
 
 
         }
+
 
 
         //TODO: UML aanpassen AllBooksByLanguageUi()
@@ -527,8 +570,6 @@ namespace Bib_Mulinski_Piotr
                 Console.WriteLine();
             }
 
-
-
         }
 
 
@@ -546,8 +587,8 @@ namespace Bib_Mulinski_Piotr
                 Console.WriteLine("3. Alle info tonen op basis van titel en auteur");
                 Console.WriteLine("4. Boek zoeken (submenu)");
                 Console.WriteLine("5. Boek verwijderen");
-                //Console.WriteLine("6. Alle boeken tonen");
-                //Console.WriteLine("7. CSV inlezen");
+                Console.WriteLine("6. Alle boeken tonen");
+                Console.WriteLine("7. CSV inlezen");
                 Console.WriteLine("0. Afsluiten");
                 Console.WriteLine();
                 Console.Write("Maak een keuze: ");
@@ -572,6 +613,13 @@ namespace Bib_Mulinski_Piotr
                         break;
                     case "5":
                         RemoveBookFromLibraryByGuidUi();
+                        break;
+                    case "6":
+                        ShowAllBooksUi();
+                        break;
+                    case "7":
+                        ReadBooksFromCsvUi();
+
                         break;
                     case "0":
                         isRunning = false;

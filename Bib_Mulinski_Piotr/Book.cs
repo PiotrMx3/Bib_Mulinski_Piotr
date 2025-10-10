@@ -82,7 +82,7 @@ namespace Bib_Mulinski_Piotr
 		public BooksEnums.Language Language
 		{
 			get { return _language; }
-			set { _language = value; }
+			private set { _language = value; }
 		}
 
 		public int Pages

@@ -1,3 +1,20 @@
 1984,George Orwell
 To Kill a Mockingbird,Harper Lee
 The Hobbit,J.R.R. Tolkien
+Pride and Prejudice,Jane Austen
+The Catcher in the Rye,J.D. Salinger
+The Great Gatsby,F. Scott Fitzgerald
+Moby Dick,Herman Melville
+War and Peace,Leo Tolstoy
+Crime and Punishment,Fyodor Dostoevsky
+Brave New World,Aldous Huxley
+The Lord of the Rings,J.R.R. Tolkien
+The Alchemist,Paulo Coelho
+Jane Eyre,Charlotte Brontë
+The Picture of Dorian Gray,Oscar Wilde
+Fahrenheit 451,Ray Bradbury
+Animal Farm,George Orwell
+Dracula,Bram Stoker
+Frankenstein,Mary Shelley
+The Chronicles of Narnia,C.S. Lewis
+Les Misérables,Victor Hugo

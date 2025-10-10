@@ -11,7 +11,6 @@
             }
             catch (Exception e)
             {
-
                 Console.WriteLine("Fatal error ! " + e.Message);
             }
 

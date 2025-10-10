@@ -104,13 +104,13 @@ namespace Bib_Mulinski_Piotr
 
 
         /// <summary>
+        /// 
         /// Enum.GetValues<Language>()) geeft een array terug van alle enums is een generice type kan ook met
         /// 
         /// Enum.GetValues(typeof(Language)))
         /// maar moet casting geburen enum.GetValues verwacht een type van values dus typeof(Language)
         /// 
         /// </summary>
-        /// 
 
 
         //TODO: UML EnumMenuForLang()
