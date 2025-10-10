@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -18,10 +20,9 @@ namespace Bib_Mulinski_Piotr
 			if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Naam van Bib mag niet leeg zijn !");
 			Name = name.Trim();
 		}
-		public List<Book> LibraryAllBooks
+		public ImmutableList<Book> LibraryAllBooks
 		{
-			get { return _libraryAllBooks; }
-			private set { _libraryAllBooks = value; }
+			get { return _libraryAllBooks.ToImmutableList(); }
 		}
 
         public string Name
@@ -64,13 +65,14 @@ namespace Bib_Mulinski_Piotr
 
 		}
 
-        public List<Book>? AllBooksByLanguage(BooksEnums.Language lang)
+
+        public ImmutableList<Book>? AllBooksByLanguage(BooksEnums.Language lang)
         {
             return LibraryAllBooks.FindAll(el => el.Language == lang);
         }
 
 
-        public List<Book>? AllBooksByAuthor(string author)
+        public ImmutableList<Book>? AllBooksByAuthor(string author)
 		{
 			return LibraryAllBooks.FindAll(el => el.Author.ToLower() == author.Trim().ToLower());
         }
@@ -98,11 +100,11 @@ namespace Bib_Mulinski_Piotr
             if (!Guid.TryParse(guid.Trim(), out Guid correctGuid))
                 return false;
 
-            Book? bookToRemove = LibraryAllBooks.Find(el => el.LibraryBookGuid == correctGuid);
+            Book? bookToRemove = _libraryAllBooks.Find(el => el.LibraryBookGuid == correctGuid);
 
             if (bookToRemove != null)
             {
-                LibraryAllBooks.Remove(bookToRemove);
+                _libraryAllBooks.Remove(bookToRemove);
 				return true;
             }
 
@@ -114,7 +116,7 @@ namespace Bib_Mulinski_Piotr
 		{ 
 			if (book is null) return;
 
-			LibraryAllBooks.Add(book);
+			_libraryAllBooks.Add(book);
 		}
 
 

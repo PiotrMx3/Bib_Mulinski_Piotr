@@ -119,7 +119,7 @@ namespace Bib_Mulinski_Piotr
 
             foreach (BooksEnums.Language lang in Enum.GetValues<BooksEnums.Language>())
             {
-                Console.WriteLine($"{(int)lang} - {lang}");
+                Console.WriteLine($"{(int)lang} - {ToDutchLang(lang)}");
             }
 
         }
@@ -130,7 +130,7 @@ namespace Bib_Mulinski_Piotr
 
             foreach (BooksEnums.Genre genre in Enum.GetValues<BooksEnums.Genre>())
             {
-                Console.WriteLine($"{(int)genre} - {genre}");
+                Console.WriteLine($"{(int)genre} - {ToDutchGenre(genre)}");
             }
 
         }

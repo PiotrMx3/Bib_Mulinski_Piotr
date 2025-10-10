@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,14 +22,14 @@ namespace Bib_Mulinski_Piotr
 
         }
 
-        //UML aanpassen SearchBookSubMenu()
+        //TODO: UML aanpassen SearchBookSubMenu()
         private void SearchBookSubMenuUi()
         {
             bool isRunning = true;
 
             while (isRunning)
             {
-                Logger.LogInfo("Welkom in het submenu voor het zoeken van boeken");
+                Logger.LogInfo("==== Submenu: Boeken Zoeken ====");
                 Console.WriteLine();
                 Console.WriteLine();
 
@@ -37,7 +38,7 @@ namespace Bib_Mulinski_Piotr
                 Console.WriteLine("3. Zoek alle boeken op basis van auteur");
                 Console.WriteLine("4. Zoek alle boeken op basis van taal");
                 Console.WriteLine("0. Afsluiten");
-
+                Console.WriteLine();
 
                 Console.Write("Maak een keuze: ");
                 string userChoice = (Console.ReadLine() ?? "").Trim();
@@ -49,50 +50,144 @@ namespace Bib_Mulinski_Piotr
                         FindBookByNameAndAuthorUi();
                         break;
                     case "2":
-                        Logger.LogInfo("Zoek een boek op basis van ISBN nummer.");
-                        Console.WriteLine();
-
-                        Console.Write("Geef de ISBN nummer van het boek in: ");
-                        string IsbnFromUser = (Console.ReadLine() ?? "").Trim();
-
-
-                        Book? foundedBook = _library.FindBookByIsbn(IsbnFromUser);
-                        Console.WriteLine();
-
-                        if (foundedBook is not null)
-                        {
-                            Logger.LogInfo("Gegevens van het gevonden boek: ");
-                            Console.WriteLine();
-                            Console.WriteLine($"{foundedBook.Describe()}");
-                        }
-
-                        else
-                        {
-                            Console.WriteLine();
-                            Logger.LogError("Geen resultaten gevonden");
-                            Console.WriteLine();
-                            Logger.LogError("Controleer het ISBN nummer");
-                            Console.WriteLine();
-                        }
-
+                        FindBookByIsbnUi();
+                        break;
+                    case "3":
+                        FindBooksByAutorUi();
+                        break;
+                    case "4":
+                        AllBooksByLanguageUi();
                         break;
                     case "0":
                         isRunning = false;
                         break;
                     default:
+                        Logger.LogError("Ongeldige keuze");
+                        Console.WriteLine();
                         break;
                 }
-
-
-
-
 
             }
 
 
         }
 
-        //UML aanpassen FindBookByNameAndAuthorUi()
+        //TODO: UML aanpassen AllBooksByLanguageUi()
+
+        private void AllBooksByLanguageUi()
+        {
+            Logger.LogInfo("Geef een gewenste Taal in: ");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Beschikbare opties: ");
+            Console.WriteLine();
+
+            EnumUtlis.EnumMenuForLang();
+            Console.WriteLine();
+
+            Console.Write("Maak een keuze: ");
+
+            string langChoice = (Console.ReadLine() ?? "").Trim();
+
+
+            if (int.TryParse(langChoice, out int parsedValue) && Enum.IsDefined<BooksEnums.Language>((BooksEnums.Language)parsedValue))
+            {
+                BooksEnums.Language langFromUser = (BooksEnums.Language)parsedValue;
+                ImmutableList<Book>? allBooksByLang = _library.AllBooksByLanguage(langFromUser);
+
+                if (allBooksByLang is not null && allBooksByLang.Count != 0)
+                {
+                    Logger.LogInfo($"Gevonden boeken in {EnumUtlis.ToDutchLang(langFromUser)}");
+                    Console.WriteLine();
+                    Console.WriteLine();
+
+                    foreach (Book book in allBooksByLang)
+                    {
+                        Console.WriteLine($"{book.Describe()}");
+                        Console.WriteLine();
+
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Logger.LogError("Geen resultaten gevonden.");
+                    Console.WriteLine();
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine();
+                Logger.LogError("Gekozen waarde bestaat niet !");
+                Console.WriteLine();
+            }
+
+        }
+
+
+        //TODO: UML aanpassen FindBooksByAutor()
+        private void FindBooksByAutorUi()
+        {
+            Logger.LogInfo("Zoek alle boeken op basis van Auteur.");
+            Console.WriteLine();
+            Console.Write("Geef de gewenste Auteur van het boek in: ");
+            string authorFromUser = (Console.ReadLine() ?? "").Trim();
+
+            ImmutableList<Book>? allBooksByAuthor = _library.AllBooksByAuthor(authorFromUser);
+            Console.WriteLine();
+
+            if(allBooksByAuthor is not null && allBooksByAuthor.Count != 0)
+            {
+                Logger.LogInfo($"Alle gevonden boeken van {authorFromUser}");
+                Console.WriteLine();
+                Console.WriteLine();
+
+                foreach (Book book in allBooksByAuthor)
+                {
+                    Console.WriteLine($"{book.Describe()}");
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine();
+                Logger.LogError("Geen resultaten gevonden. \n\nControleer de auteursnaam");
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+
+        }
+
+        //TODO: UML aanpassen FindBookByIsbnUi()
+        private void FindBookByIsbnUi()
+        {
+            Logger.LogInfo("Zoek een boek op basis van ISBN nummer.");
+            Console.WriteLine();
+
+            Console.Write("Geef de ISBN nummer van het boek in: ");
+            string isbnFromUser = (Console.ReadLine() ?? "").Trim();
+
+            Book? foundedBook = _library.FindBookByIsbn(isbnFromUser);
+            Console.WriteLine();
+
+            if (foundedBook is not null)
+            {
+                Logger.LogInfo("Gegevens van het gevonden boek: ");
+                Console.WriteLine();
+                Console.WriteLine($"{foundedBook.Describe()}");
+            }
+
+            else
+            {
+                Console.WriteLine();
+                Logger.LogError("Geen resultaten gevonden. \n\nControleer het ISBN nummer");
+                Console.WriteLine();
+            }
+        }
+
+        //TODO: UML aanpassen FindBookByNameAndAuthorUi()
         private void FindBookByNameAndAuthorUi()
         {
             Logger.LogInfo("Zoek een boek op basis van titel en auteur.");
@@ -103,6 +198,7 @@ namespace Bib_Mulinski_Piotr
 
             Console.Write("Geef de auteur van het boek in: ");
             string authorFromUser = (Console.ReadLine() ?? "").Trim();
+            Console.WriteLine();
 
             Book? foundedBook = _library.FindBookByNameAndAuthor(titleFromUser,authorFromUser);
 
@@ -116,7 +212,7 @@ namespace Bib_Mulinski_Piotr
             else
             {
                 Console.WriteLine();
-                Logger.LogError("Geen resultaten gevonden");
+                Logger.LogError("Geen resultaten gevonden.\n\nControleer de titel en auteur.");
                 Console.WriteLine();
             }
 
@@ -129,8 +225,11 @@ namespace Bib_Mulinski_Piotr
 
             while (isRunning)
             {
-                Console.WriteLine("==== Boekaanpassingsmenu ====");
+                Logger.LogInfo("==== Boekaanpassingsmenu ====");
+                Console.WriteLine();
+                Console.WriteLine();
                 Console.WriteLine("Wat wil je aanpassen?");
+                Console.WriteLine();
                 Console.WriteLine("1. Titel");
                 Console.WriteLine("2. Auteur");
                 Console.WriteLine("3. Uitgever");
@@ -153,10 +252,10 @@ namespace Bib_Mulinski_Piotr
                 {
                     case "1":
                         Console.WriteLine();
-                        Console.WriteLine($"Huidige Titel: {book.Title} ");
+                        Logger.LogInfo($"Huidige Titel: {book.Title} ");
+                        Console.WriteLine();
                         Console.WriteLine();
                         Console.Write("Geef nieuwe Titel in: ");
-                        
 
                         string newTitle = (Console.ReadLine() ?? "").Trim();
 
@@ -176,9 +275,11 @@ namespace Bib_Mulinski_Piotr
 
                     case "2":
                         Console.WriteLine();
-                        Console.WriteLine($"Huidige Auteur: {book.Author} ");
+                        Logger.LogInfo($"Huidige Auteur: {book.Author} ");
+                        Console.WriteLine();
                         Console.WriteLine();
                         Console.Write("Geef nieuwe Auteur in: ");
+
 
 
                         string newAuthor = (Console.ReadLine() ?? "").Trim();
@@ -199,9 +300,11 @@ namespace Bib_Mulinski_Piotr
 
                     case "3":
                         Console.WriteLine();
-                        Console.WriteLine($"Huidige Uitgever {book.Publisher} ");
+                        Logger.LogInfo($"Huidige Uitgever {book.Publisher} ");
+                        Console.WriteLine();
                         Console.WriteLine();
                         Console.Write("Geef nieuwe Uitgever in: ");
+
 
 
                         string newPublisher = (Console.ReadLine() ?? "").Trim();
@@ -222,9 +325,11 @@ namespace Bib_Mulinski_Piotr
 
                     case "4":
                         Console.WriteLine();
-                        Console.WriteLine($"Huidig Genre {EnumUtlis.ToDutchGenre(book.Genre)}");
+                        Logger.LogInfo($"Huidig Genre {EnumUtlis.ToDutchGenre(book.Genre)}");
+                        Console.WriteLine();
                         Console.WriteLine();
                         Console.WriteLine("Geef een nieuwe Genre in: ");
+                        Console.WriteLine();
                         Console.WriteLine();
                         Console.WriteLine("Beschikbare opties: ");
                         Console.WriteLine();
@@ -260,34 +365,35 @@ namespace Bib_Mulinski_Piotr
                         break;
 
                     //case "5":
-                    //    Console.WriteLine("Option 5 selected.");
+                    //    Console.WriteLine("Optie 5 gekozen.");
                     //    break;
 
                     //case "6":
-                    //    Console.WriteLine("Option 6 selected.");
+                    //    Console.WriteLine("Optie 6 gekozen.");
                     //    break;
 
                     //case "7":
-                    //    Console.WriteLine("Option 7 selected.");
+                    //    Console.WriteLine("Optie 7 gekozen.");
                     //    break;
 
                     //case "8":
-                    //    Console.WriteLine("Option 8 selected.");
+                    //    Console.WriteLine("Optie 8 gekozen.");
                     //    break;
 
                     //case "9":
-                    //    Console.WriteLine("Option 9 selected.");
+                    //    Console.WriteLine("Optie 9 gekozen.");
                     //    break;
 
                     //case "10":
-                    //    Console.WriteLine("Option 10 selected.");
+                    //    Console.WriteLine("Optie 10 gekozen.");
                     //    break;
                     case "0":
                         isRunning = false;
                         break;
 
                     default:
-                        Logger.LogError("Ongeldige keuze. Kies een nummer van 1 tot 4");
+                        Logger.LogError("Ongeldige keuze");
+                        Console.WriteLine();
                         break;
                 }
                 Console.WriteLine();
@@ -328,7 +434,7 @@ namespace Bib_Mulinski_Piotr
 
             if(bookToEdit is not null)
             {
-                //TODO: nog metohde maken om infot te bewrken.
+             
                 ShowBookEditMenuUi(bookToEdit);
                 
             }
@@ -341,7 +447,6 @@ namespace Bib_Mulinski_Piotr
 
 
         }
-
 
 
         private void AddBookBytitleAndAuthorUi()
@@ -384,7 +489,9 @@ namespace Bib_Mulinski_Piotr
 
             while (isRunning)
             {
-                Console.WriteLine("==== Bib Menu ====");
+                Logger.LogInfo("==== Bib Menu ====");
+                Console.WriteLine();
+                Console.WriteLine();
                 Console.WriteLine("1. Boek toevoegen op basis van titel en auteur");
                 Console.WriteLine("2. Info van een boek aanpassen");
                 Console.WriteLine("3. Alle info tonen op basis van titel en auteur");
@@ -419,6 +526,7 @@ namespace Bib_Mulinski_Piotr
                         break;
                     default:
                         Logger.LogError("Ongeldige keuze");
+                        Console.WriteLine();
                         break;
                 }
 
@@ -435,10 +543,10 @@ namespace Bib_Mulinski_Piotr
 
             do
             {
-                Logger.LogInfo("Welkom bij het bibliotheekbeheersysteem \n" +
-                    "Om te beginne geef de naam van jouw bib in: ");
+                Logger.LogInfo("Welkom bij het bibliotheekbeheersysteem \nOm te beginne geef de naam van jouw bib in: ");
 
                 bibName = Console.ReadLine() ?? "";
+                Console.WriteLine();
 
                 if (string.IsNullOrWhiteSpace(bibName)) Logger.LogError("Naam van bib mag niet leeg zijn !");
                 Console.WriteLine();
