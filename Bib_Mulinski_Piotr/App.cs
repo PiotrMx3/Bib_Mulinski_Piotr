@@ -10,7 +10,6 @@ namespace Bib_Mulinski_Piotr
 {
     internal class App
     {
-
         private Library _library = null!;
 
         public void Run()
@@ -21,6 +20,55 @@ namespace Bib_Mulinski_Piotr
             ShowBibMenuUi();
 
         }
+
+
+        //TODO: UML aanpassen RemoveBookFromLibraryByGuidUi()
+
+        private void RemoveBookFromLibraryByGuidUi()
+        {
+            if (_library.LibraryAllBooks.Count == 0)
+            {
+                Logger.LogError("Bibliotheek bevat geen boeken !");
+                Console.WriteLine();
+                return;
+            }
+
+
+            foreach (Book book in _library.LibraryAllBooks)
+            {
+                Console.WriteLine($"{book.ShortDescribe()}");
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+
+            Logger.LogInfo("Om een boek te verwijderen geef een GUID in: ");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.Write("Welk boek wil je verwijderen ?: ");
+
+            string guidFromUser = (Console.ReadLine() ?? "").Trim();
+
+            bool removed = _library.RemoveBookFromLibraryByGuid(guidFromUser);
+
+            Console.WriteLine();
+
+            if (removed)
+            {
+                Console.WriteLine();
+                Logger.LogSuccess($"Boek met GUID: {guidFromUser} is verwijderdt");
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine();
+                Logger.LogError("Controleer de GUID aub");
+                Console.WriteLine();
+            }
+
+        }
+
+
 
         //TODO: UML aanpassen SearchBookSubMenu()
         private void SearchBookSubMenuUi()
@@ -72,6 +120,7 @@ namespace Bib_Mulinski_Piotr
 
         }
 
+
         //TODO: UML aanpassen AllBooksByLanguageUi()
 
         private void AllBooksByLanguageUi()
@@ -86,6 +135,7 @@ namespace Bib_Mulinski_Piotr
             Console.WriteLine();
 
             Console.Write("Maak een keuze: ");
+            Console.WriteLine();
 
             string langChoice = (Console.ReadLine() ?? "").Trim();
 
@@ -242,10 +292,9 @@ namespace Bib_Mulinski_Piotr
                 //Console.WriteLine("10. Land van oorsprong");
                 Console.WriteLine("0. Afsluiten");
 
-
-
                 Console.WriteLine();
                 Console.Write("Maak een keuze: ");
+
                 string userChoice = (Console.ReadLine() ?? "").Trim();
 
                 switch (userChoice)
@@ -496,7 +545,7 @@ namespace Bib_Mulinski_Piotr
                 Console.WriteLine("2. Info van een boek aanpassen");
                 Console.WriteLine("3. Alle info tonen op basis van titel en auteur");
                 Console.WriteLine("4. Boek zoeken (submenu)");
-                //Console.WriteLine("5. Boek verwijderen");
+                Console.WriteLine("5. Boek verwijderen");
                 //Console.WriteLine("6. Alle boeken tonen");
                 //Console.WriteLine("7. CSV inlezen");
                 Console.WriteLine("0. Afsluiten");
@@ -520,6 +569,9 @@ namespace Bib_Mulinski_Piotr
                         break;
                     case "4":
                         SearchBookSubMenuUi();
+                        break;
+                    case "5":
+                        RemoveBookFromLibraryByGuidUi();
                         break;
                     case "0":
                         isRunning = false;
