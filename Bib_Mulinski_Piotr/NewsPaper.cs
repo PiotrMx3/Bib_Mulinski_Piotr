@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Bib_Mulinski_Piotr
 {
-    internal class NewsPaper : ReadinRoomItem
-    {
+    internal class NewsPaper : ReadingRoomItem
+    {   //TODO: Mocking 5 NewsPapers
+
         private DateTime _date;
 
         public DateTime Date
@@ -27,7 +28,7 @@ namespace Bib_Mulinski_Piotr
         {
             get
             {
-                string[] separatedTitle = Title.Split(" ");
+                string[] separatedTitle = Title.Split(" ", StringSplitOptions.RemoveEmptyEntries);
                 string idTitle = "";
 
                 for (int i = 0; i < separatedTitle.Length; i++)
@@ -36,7 +37,7 @@ namespace Bib_Mulinski_Piotr
                 }
 
                 CultureInfo belgiumCI = new CultureInfo("nl-BE");
-                idTitle += $"\n{Date.ToString("dd/MM/yyyy",belgiumCI)}";
+                idTitle += $" {Date.ToString("dd/MM/yyyy",belgiumCI)}";
 
                 return idTitle;
             }

@@ -17,4 +17,7 @@
 -- <T>.TryParse(value, out <T> correctValue) 
    hiermee kan je veilig controleren of de conversie lukt.
 
+-- CultureInfo belgiumCI = new CultureInfo("nl-BE");
+
+	$"\n{Date.ToString("dd/MM/yyyy",belgiumCI)}";
 

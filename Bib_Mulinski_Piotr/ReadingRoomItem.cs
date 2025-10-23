@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Bib_Mulinski_Piotr
 {
-    abstract class ReadinRoomItem
+    abstract class ReadingRoomItem
     {
 		private string _title = "";
 		private string _publisher = "";
 		abstract public string Identification { get; }
 		abstract public string Categorie { get; }
 
-        public ReadinRoomItem(string title, string publisher)
+        public ReadingRoomItem(string title, string publisher)
 		{
 			Title = title;
 			Publisher = publisher;
