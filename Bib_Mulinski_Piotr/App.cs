@@ -11,17 +11,17 @@ namespace Bib_Mulinski_Piotr
     internal class App
     {
         private Library _library = null!;
-        private LibraryMenuUi _menu = null!;
+        private LibraryMenuUi _menuLibrary = null!;
 
 
         public void Run()
         {
             this._library = InitBibNameUi();
-            this._menu = new LibraryMenuUi(this._library);
-
+            this._menuLibrary = new LibraryMenuUi(this._library);
 
             MockBooks();
-            _menu.ShowBibMenuUi();
+
+            _menuLibrary.ShowBibMenuUi();
 
         }
 
