@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Bib_Mulinski_Piotr
 {
-    //TODO: UML ANNAPSSEN Logger
     internal class Logger
     {
         public static void LogError(string message, Exception? e = null)

@@ -107,7 +107,6 @@ namespace Bib_Mulinski_Piotr
 			private set {  _genre= value; }
 		}
 
-        //TODO: UML ANNAPSSEN ChangeGenre()
         public void ChangeGenre(BooksEnums.Genre newGenre)
 		{
 			Genre = newGenre;
@@ -123,8 +122,6 @@ namespace Bib_Mulinski_Piotr
 			}
         }
 
-        //TODO: UML ANNAPSSEN ChangePublisher()
-
 		public void ChangePublisher(string newPublisher)
 		{
 			Publisher = newPublisher;
@@ -139,7 +136,7 @@ namespace Bib_Mulinski_Piotr
 				_author = value; 
 			}
 		}
-        //TODO: UML ANNAPSSEN ChangeAuthor()
+
         public void ChangeAuthor(string newAuthor)
 		{
 			Author = newAuthor;
@@ -155,7 +152,6 @@ namespace Bib_Mulinski_Piotr
 			}
 		}
 
-        //TODO: UML ANNAPSSEN ChangeTitle()
         public void ChangeTitle(string newTitle)
 		{
 			Title = newTitle;

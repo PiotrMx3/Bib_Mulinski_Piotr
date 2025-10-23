@@ -113,7 +113,6 @@ namespace Bib_Mulinski_Piotr
         /// </summary>
 
 
-        //TODO: UML EnumMenuForLang()
         public static void EnumMenuForLang()
         {
 
@@ -124,7 +123,6 @@ namespace Bib_Mulinski_Piotr
 
         }
 
-        //TODO: UML EnumMenuForGenre()
         public static void EnumMenuForGenre()
         {
 
