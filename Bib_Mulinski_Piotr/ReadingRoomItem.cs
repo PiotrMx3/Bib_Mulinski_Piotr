@@ -43,7 +43,5 @@ namespace Bib_Mulinski_Piotr
 			}
 		}
 
-
-
 	}
 }
