@@ -14,24 +14,9 @@
             //    Console.WriteLine("Fatal error ! " + e.Message);
             //}
 
+            Library l = new("test");
 
-            Magazine newMagazine = new Magazine("mojmagazyn super", "supperikke", 12, 2024);
-
-            Console.WriteLine($"{newMagazine.Title}");
-            Console.WriteLine($"{newMagazine.Publisher}");
-            Console.WriteLine($"{newMagazine.Month}");
-            Console.WriteLine($"{newMagazine.Year}");
-
-            Console.WriteLine();
-            Console.WriteLine();
-
-            Console.WriteLine($"{newMagazine.Identification}");
-            Console.WriteLine();
-            Console.WriteLine($"{newMagazine.Categorie}");
-
-
-
-
+            l.AddNewsPaper();
         }
 
     }

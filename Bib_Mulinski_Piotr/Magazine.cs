@@ -22,11 +22,11 @@ namespace Bib_Mulinski_Piotr
 
         public uint Year
         {
-            get { return _year; }
+            get { return this._year; }
             private set
             {
                 if(value > 2500) throw new ArgumentException("Het jaartal is maximaal 2500.");
-                _year = value;
+                this._year = value;
             }
         }
 

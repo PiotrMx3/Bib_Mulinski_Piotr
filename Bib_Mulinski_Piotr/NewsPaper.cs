@@ -10,20 +10,20 @@ namespace Bib_Mulinski_Piotr
     internal class NewsPaper : ReadingRoomItem
     {   //TODO: Mocking 5 NewsPapers
 
-        private DateTime _date;
-
+        private DateTime _date = DateTime.MinValue;
+         
         public DateTime Date
         {
-            get { return _date; }
-            private set { _date = value; }
+            get { return this._date; }
+            private set{ this._date = value; }
         }
 
 
         public NewsPaper(string title, string publisher, DateTime date) : base(title, publisher)
         {
-            _date = date;
+            Date = date;
         }
-
+         
         public override string Identification
         {
             get

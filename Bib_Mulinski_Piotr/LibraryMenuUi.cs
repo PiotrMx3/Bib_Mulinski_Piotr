@@ -537,8 +537,9 @@ namespace Bib_Mulinski_Piotr
 
             try
             {
-                Book newBook = new Book(userTitle, userAuthor, _library);
+                // Hier had ik ook book kunnen toevoegen via _library.AddBook()
 
+                Book newBook = new Book(userTitle, userAuthor, _library);
                 Logger.LogSuccess($"Nieuw boek van {newBook.Author} is toegevoegd");
                 Console.WriteLine();
             }
