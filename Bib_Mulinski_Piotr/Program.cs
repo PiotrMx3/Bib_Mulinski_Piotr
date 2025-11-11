@@ -16,7 +16,8 @@
 
             Library l = new("test");
 
-            l.AddNewsPaper();
+            Console.ReadKey();
+            l.ShowAllMagazines();
         }
 
     }

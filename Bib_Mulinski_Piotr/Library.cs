@@ -16,6 +16,7 @@ namespace Bib_Mulinski_Piotr
         private List<Book> _libraryAllBooks = new();
         private Dictionary<DateTime, ReadingRoomItem> _allReadingRoom = new();
 
+
         // Bibliotheek
         public Library(string name)
         {
@@ -48,7 +49,39 @@ namespace Bib_Mulinski_Piotr
 
         // Leeszaal
 
+        public void ShowAllMagazines()
+        {
+            var builder = ImmutableList.CreateBuilder<Magazine>();
 
+            foreach (var item in AllReadingRoom.Values)
+            {
+                if (item is Magazine magazine)
+                {
+                    builder.Add(magazine);
+                }
+            }
+
+
+
+            ImmutableList<Magazine> allMagazines = builder.ToImmutableList();
+
+            Console.WriteLine();
+            Console.WriteLine("Alle maandbladen uit de leeszaal:");
+            Console.WriteLine();
+
+            if (allMagazines.Count == 0)
+            {
+                Console.WriteLine("Er zijn geen magzines in de leeszaal");
+            }
+            else
+            {
+                foreach (Magazine magazine in allMagazines)
+                {
+                    Console.WriteLine(magazine);
+                }
+            }
+
+        }
         public void AddMagazine()
         {
             Console.WriteLine("Wat is de naam van het maandblad ?");

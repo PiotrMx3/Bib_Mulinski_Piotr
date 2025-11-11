@@ -9,7 +9,6 @@ namespace Bib_Mulinski_Piotr
 {
     internal class Magazine : ReadingRoomItem
     {
-        //TODO: Mocking 5 Magazines
         private byte _month;
         private uint _year;
 
@@ -63,6 +62,11 @@ namespace Bib_Mulinski_Piotr
         public override string Categorie
         {
             get { return "Maandblad" ; }
+        }
+
+        public override string ToString()
+        {
+            return $"- {this.Title} van {this.Month}/{this.Year} van uitgeverij {this.Publisher}";
         }
     }
 }

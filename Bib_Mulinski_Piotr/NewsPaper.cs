@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 namespace Bib_Mulinski_Piotr
 {
     internal class NewsPaper : ReadingRoomItem
-    {   //TODO: Mocking 5 NewsPapers
-
+    {  
         private DateTime _date = DateTime.MinValue;
          
         public DateTime Date

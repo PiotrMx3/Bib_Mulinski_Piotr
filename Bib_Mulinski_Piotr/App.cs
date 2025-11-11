@@ -22,8 +22,6 @@ namespace Bib_Mulinski_Piotr
             this._menuReadingRoom = new ReadingRoomMenuUi(this._library);
 
             MockBooks();
-            MockNewsPapers();
-            MockMagazines();
 
             _menuLibrary.ShowBibMenuUi();
             _menuReadingRoom.ShowReadingRoomMenuUi();
@@ -53,33 +51,6 @@ namespace Bib_Mulinski_Piotr
 
         }
 
-        private void MockMagazines()
-        {
-            Magazine magazine1 = new Magazine("Knack", "Roularta Media Group", 10, 2023);
-            Magazine magazine2 = new Magazine("Libelle", "Roularta Media Group", 11, 2023);
-            Magazine magazine3 = new Magazine("Humo", "DPG Media", 9, 2023);
-            Magazine magazine4 = new Magazine("De Tijd", "Mediafin", 8, 2022);
-            Magazine magazine5 = new Magazine("Feeling", "Roularta Media Group", 1, 2024);
-            Magazine magazine6 = new Magazine("Flair", "Roularta Media Group", 5, 2023);
-            Magazine magazine7 = new Magazine("Wonen Landelijke Stijl", "Sanoma", 7, 2023);
-            Magazine magazine8 = new Magazine("Autogids", "ProduPress", 4, 2024);
-            Magazine magazine9 = new Magazine("Njam!", "Studio 100", 3, 2023);
-            Magazine magazine10 = new Magazine("Trends", "Roularta Media Group", 2, 2024);
-        }
-
-        private void MockNewsPapers()
-        {
-            NewsPaper newspaper1 = new NewsPaper("De Standaard", "Mediahuis", new DateTime(2024, 5, 10));
-            NewsPaper newspaper2 = new NewsPaper("De Morgen", "DPG Media", new DateTime(2024, 5, 10));
-            NewsPaper newspaper3 = new NewsPaper("Het Laatste Nieuws", "DPG Media", new DateTime(2024, 5, 9));
-            NewsPaper newspaper4 = new NewsPaper("Het Nieuwsblad", "Mediahuis", new DateTime(2024, 5, 10));
-            NewsPaper newspaper5 = new NewsPaper("De Tijd", "Mediafin", new DateTime(2024, 5, 8));
-            NewsPaper newspaper6 = new NewsPaper("Gazet van Antwerpen", "Mediahuis", new DateTime(2024, 5, 10));
-            NewsPaper newspaper7 = new NewsPaper("Het Belang van Limburg", "Mediahuis", new DateTime(2024, 5, 9));
-            NewsPaper newspaper8 = new NewsPaper("Metro", "Mass Transit Media", new DateTime(2024, 5, 7));
-            NewsPaper newspaper9 = new NewsPaper("Het Laatste Nieuws", "DPG Media", new DateTime(2024, 5, 10));
-            NewsPaper newspaper10 = new NewsPaper("De Standaard", "Mediahuis", new DateTime(2024, 5, 9));
-        }
 
         private void MockBooks()
         {
