@@ -44,7 +44,7 @@ namespace Bib_Mulinski_Piotr
             get
             {
                 string[] separatedTitle = Title.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                string idTitle = "";
+                string idTitle = $"{this.Title} met id ";
 
                 for (int i = 0; i < separatedTitle.Length; i++)
                 {
@@ -53,7 +53,7 @@ namespace Bib_Mulinski_Piotr
 
                 DateTime date = new DateTime((int)Year, (int)Month, DateTime.Today.Day);
 
-                idTitle += $" {date.Month}/{date.Year}";
+                idTitle += $"{date.Month}{date.Year}";
 
                 return idTitle;
             }

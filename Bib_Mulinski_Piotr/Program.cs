@@ -17,8 +17,8 @@
             Library l = new("test");
 
             Console.ReadKey();
-           
-            l.ShowAllNewspapers();
+
+            l.AcquisitionReadingRoomToday();
         }
 
     }

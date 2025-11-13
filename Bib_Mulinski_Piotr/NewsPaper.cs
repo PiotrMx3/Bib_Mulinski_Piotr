@@ -28,7 +28,8 @@ namespace Bib_Mulinski_Piotr
             get
             {
                 string[] separatedTitle = Title.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                string idTitle = "";
+
+                string idTitle = $"{this.Title} met id ";
 
                 for (int i = 0; i < separatedTitle.Length; i++)
                 {
@@ -36,7 +37,7 @@ namespace Bib_Mulinski_Piotr
                 }
 
                 CultureInfo belgiumCI = new CultureInfo("nl-BE");
-                idTitle += $" {Date.ToString("dd/MM/yyyy",belgiumCI)}";
+                idTitle += $"{Date.ToString("ddMMyyyy",belgiumCI)}";
 
                 return idTitle;
             }

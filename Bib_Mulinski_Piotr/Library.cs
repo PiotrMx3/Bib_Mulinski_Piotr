@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace Bib_Mulinski_Piotr
 {
@@ -14,7 +13,7 @@ namespace Bib_Mulinski_Piotr
     {
         private string _name = "";
         private List<Book> _libraryAllBooks = new();
-        private Dictionary<DateTime, ReadingRoomItem> _allReadingRoom = new() { {DateTime.Now, new Magazine("Data News", "Roularta", 9, 2023) } , { DateTime.Now, new NewsPaper("Gazet van Antwerpen", "Mediahuis", new DateTime(2025, 03, 01)) } };
+        private Dictionary<DateTime, ReadingRoomItem> _allReadingRoom = new() { { DateTime.Now, new Magazine("Data News", "Roularta", 9, 2023) }, { DateTime.Now, new NewsPaper("Gazet van Antwerpen", "Mediahuis", new DateTime(2025, 03, 01)) } };
 
 
         // Bibliotheek
@@ -48,6 +47,43 @@ namespace Bib_Mulinski_Piotr
 
 
         // Leeszaal
+
+        public void AcquisitionReadingRoomToday()
+        {
+            // Geeft een object terug met enkel de datum, de tijd staat op 00:00:00
+            DateTime dateToday = DateTime.Now.Date;
+
+            Console.WriteLine(dateToday);
+
+            var builder = ImmutableList.CreateBuilder<ReadingRoomItem>();
+
+
+            foreach (var kv in AllReadingRoom )
+            {
+                if (kv.Key.Date == dateToday) builder.Add(kv.Value);
+            }
+
+
+            ImmutableList<ReadingRoomItem> allToday = builder.ToImmutableList();
+
+            Console.WriteLine();
+            Console.WriteLine($"Aanwinsten in de leeszaal van {dateToday.ToString("dddd d MMMM yyyy", new CultureInfo("nl-Be"))} :");
+            Console.WriteLine();
+
+            if (allToday.Count == 0)
+            {
+                Logger.LogInfo("Vandaag zijn er geen tijdschriften in de leeszaal");
+            }
+            else
+            {
+                foreach (var readingItem in allToday)
+                {
+                    Console.WriteLine(readingItem.Identification);
+                }
+            }
+            Console.WriteLine();
+
+        }
 
         public void ShowAllNewspapers()
         {
