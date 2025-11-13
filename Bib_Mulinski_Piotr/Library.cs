@@ -14,7 +14,7 @@ namespace Bib_Mulinski_Piotr
     {
         private string _name = "";
         private List<Book> _libraryAllBooks = new();
-        private Dictionary<DateTime, ReadingRoomItem> _allReadingRoom = new();
+        private Dictionary<DateTime, ReadingRoomItem> _allReadingRoom = new() { {DateTime.Now, new Magazine("Data News", "Roularta", 9, 2023) } , { DateTime.Now, new NewsPaper("Gazet van Antwerpen", "Mediahuis", new DateTime(2025, 03, 01)) } };
 
 
         // Bibliotheek
@@ -49,6 +49,40 @@ namespace Bib_Mulinski_Piotr
 
         // Leeszaal
 
+        public void ShowAllNewspapers()
+        {
+            var builder = ImmutableList.CreateBuilder<NewsPaper>();
+
+            foreach (var item in AllReadingRoom.Values)
+            {
+                if (item is NewsPaper newsPaper)
+                {
+                    builder.Add(newsPaper);
+                }
+            }
+
+            ImmutableList<NewsPaper> allNewspapers = builder.ToImmutableList();
+
+            Console.WriteLine();
+            Console.WriteLine("De kranten in de leeszaal:");
+            Console.WriteLine();
+
+            if (allNewspapers.Count == 0)
+            {
+                Logger.LogInfo("Er zijn geen magzines in de leeszaal");
+            }
+            else
+            {
+                foreach (NewsPaper newsPaper in allNewspapers)
+                {
+                    Console.WriteLine(newsPaper);
+                }
+            }
+            Console.WriteLine();
+
+        }
+
+
         public void ShowAllMagazines()
         {
             var builder = ImmutableList.CreateBuilder<Magazine>();
@@ -61,8 +95,6 @@ namespace Bib_Mulinski_Piotr
                 }
             }
 
-
-
             ImmutableList<Magazine> allMagazines = builder.ToImmutableList();
 
             Console.WriteLine();
@@ -71,7 +103,7 @@ namespace Bib_Mulinski_Piotr
 
             if (allMagazines.Count == 0)
             {
-                Console.WriteLine("Er zijn geen magzines in de leeszaal");
+                Logger.LogInfo("Er zijn geen magzines in de leeszaal");
             }
             else
             {
@@ -80,6 +112,7 @@ namespace Bib_Mulinski_Piotr
                     Console.WriteLine(magazine);
                 }
             }
+            Console.WriteLine();
 
         }
         public void AddMagazine()

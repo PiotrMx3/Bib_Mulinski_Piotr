@@ -34,7 +34,7 @@ namespace Bib_Mulinski_Piotr
 
             do
             {
-                Logger.LogInfo("Welkom bij het bibliotheekbeheersysteem \nOm te beginne geef de naam van jouw bib in: ");
+                Logger.LogInfo("Welkom bij het bibliotheekbeheersysteem \nOm te beginnen geef de naam van jouw bib in: ");
 
                 bibName = Console.ReadLine() ?? "";
                 Console.WriteLine();

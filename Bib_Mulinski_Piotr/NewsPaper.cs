@@ -46,5 +46,10 @@ namespace Bib_Mulinski_Piotr
         {
             get { return "Krant"; }
         }
+
+        public override string ToString()
+        {
+            return $"{this.Title} van {this.Date.ToString("dddd d MMMM yyyy", new CultureInfo("nl-Be"))} van uitgeverij {this.Publisher}";
+        }
     }
 }
