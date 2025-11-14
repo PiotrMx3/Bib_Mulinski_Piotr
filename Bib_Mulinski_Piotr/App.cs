@@ -4,24 +4,63 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace Bib_Mulinski_Piotr
 {
     internal class App
     {
         private Library _library = null!;
-        private LibraryMenuUi _menu = null!;
+        private LibraryMenuUi _menuLibrary = null!;
+        private ReadingRoomMenuUi _menuReadingRoom = null!;
 
 
         public void Run()
         {
             this._library = InitBibNameUi();
-            this._menu = new LibraryMenuUi(this._library);
-
+            this._menuLibrary = new LibraryMenuUi(this._library);
+            this._menuReadingRoom = new ReadingRoomMenuUi(this._library);
 
             MockBooks();
-            _menu.ShowBibMenuUi();
+
+            bool isRunning = true;
+
+            while (isRunning)
+            {
+                Logger.LogInfo("==== Menu ====");
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("1. Biobliotheek Menu");
+                Console.WriteLine("2. Leeszaal Menu");
+                Console.WriteLine("0. Afsluiten");
+                Console.WriteLine();
+                Console.Write("Maak een keuze: ");
+
+
+                string userChoice = (Console.ReadLine() ?? "").Trim();
+                Console.WriteLine();
+
+                switch (userChoice)
+                {
+                    case "1":
+                        _menuLibrary.ShowBibMenuUi();
+                        break;
+                    case "2":
+                        _menuReadingRoom.ShowReadingRoomMenuUi();
+                        break;
+                    case "clear":
+                        Console.Clear();
+                        break;
+                    case "0":
+                        isRunning = false;
+                        break;
+                    default:
+                        Logger.LogError("Ongeldige keuze");
+                        Console.WriteLine();
+                        break;
+                }
+
+            }
 
         }
 
@@ -31,7 +70,7 @@ namespace Bib_Mulinski_Piotr
 
             do
             {
-                Logger.LogInfo("Welkom bij het bibliotheekbeheersysteem \nOm te beginne geef de naam van jouw bib in: ");
+                Logger.LogInfo("Welkom bij het bibliotheekbeheersysteem \nOm te beginnen geef de naam van jouw bib in: ");
 
                 bibName = Console.ReadLine() ?? "";
                 Console.WriteLine();
@@ -47,6 +86,7 @@ namespace Bib_Mulinski_Piotr
 
 
         }
+
 
         private void MockBooks()
         {

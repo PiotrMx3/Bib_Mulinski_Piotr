@@ -13,7 +13,6 @@
             {
                 Console.WriteLine("Fatal error ! " + e.Message);
             }
-
         }
 
     }
