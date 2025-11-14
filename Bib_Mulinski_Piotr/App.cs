@@ -23,8 +23,44 @@ namespace Bib_Mulinski_Piotr
 
             MockBooks();
 
-            _menuLibrary.ShowBibMenuUi();
-            _menuReadingRoom.ShowReadingRoomMenuUi();
+            bool isRunning = true;
+
+            while (isRunning)
+            {
+                Logger.LogInfo("==== Menu ====");
+                Console.WriteLine();
+                Console.WriteLine();
+                Console.WriteLine("1. Biobliotheek Menu");
+                Console.WriteLine("2. Leeszaal Menu");
+                Console.WriteLine("0. Afsluiten");
+                Console.WriteLine();
+                Console.Write("Maak een keuze: ");
+
+
+                string userChoice = (Console.ReadLine() ?? "").Trim();
+                Console.WriteLine();
+
+                switch (userChoice)
+                {
+                    case "1":
+                        _menuLibrary.ShowBibMenuUi();
+                        break;
+                    case "2":
+                        _menuReadingRoom.ShowReadingRoomMenuUi();
+                        break;
+                    case "clear":
+                        Console.Clear();
+                        break;
+                    case "0":
+                        isRunning = false;
+                        break;
+                    default:
+                        Logger.LogError("Ongeldige keuze");
+                        Console.WriteLine();
+                        break;
+                }
+
+            }
 
         }
 

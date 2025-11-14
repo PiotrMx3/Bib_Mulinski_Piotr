@@ -53,12 +53,10 @@ namespace Bib_Mulinski_Piotr
             // Geeft een object terug met enkel de datum, de tijd staat op 00:00:00
             DateTime dateToday = DateTime.Now.Date;
 
-            Console.WriteLine(dateToday);
-
             var builder = ImmutableList.CreateBuilder<ReadingRoomItem>();
 
 
-            foreach (var kv in AllReadingRoom )
+            foreach (var kv in AllReadingRoom)
             {
                 if (kv.Key.Date == dateToday) builder.Add(kv.Value);
             }
@@ -67,7 +65,7 @@ namespace Bib_Mulinski_Piotr
             ImmutableList<ReadingRoomItem> allToday = builder.ToImmutableList();
 
             Console.WriteLine();
-            Console.WriteLine($"Aanwinsten in de leeszaal van {dateToday.ToString("dddd d MMMM yyyy", new CultureInfo("nl-Be"))} :");
+            Logger.LogSuccess($"Aanwinsten in de leeszaal van {dateToday.ToString("dddd d MMMM yyyy", new CultureInfo("nl-Be"))} :");
             Console.WriteLine();
 
             if (allToday.Count == 0)
@@ -100,7 +98,7 @@ namespace Bib_Mulinski_Piotr
             ImmutableList<NewsPaper> allNewspapers = builder.ToImmutableList();
 
             Console.WriteLine();
-            Console.WriteLine("De kranten in de leeszaal:");
+            Logger.LogSuccess("De kranten in de leeszaal:");
             Console.WriteLine();
 
             if (allNewspapers.Count == 0)
@@ -134,12 +132,12 @@ namespace Bib_Mulinski_Piotr
             ImmutableList<Magazine> allMagazines = builder.ToImmutableList();
 
             Console.WriteLine();
-            Console.WriteLine("Alle maandbladen uit de leeszaal:");
+            Logger.LogSuccess("Alle maandbladen uit de leeszaal:");
             Console.WriteLine();
 
             if (allMagazines.Count == 0)
             {
-                Logger.LogInfo("Er zijn geen magzines in de leeszaal");
+                Logger.LogInfo("Er zijn geen maandbladen in de leeszaal");
             }
             else
             {
@@ -176,6 +174,9 @@ namespace Bib_Mulinski_Piotr
                 {
                     Magazine m = new Magazine(titleFromUser, publisherFromUser, monthParsed, yearParsed);
                     _allReadingRoom.Add(DateTime.Now, m);
+
+                    Logger.LogSuccess($"Maandblad - {m.Identification} is toegevoegd !");
+                    Console.WriteLine();
                 }
                 catch (ArgumentException e)
                 {
@@ -213,6 +214,9 @@ namespace Bib_Mulinski_Piotr
                     NewsPaper np = new NewsPaper(titleFromUser, publisherFromUser, parsedDate);
 
                     _allReadingRoom.Add(DateTime.Now, np);
+
+                    Logger.LogSuccess($"Krant - {np.Identification} is toegevoegd !");
+                    Console.WriteLine();
 
                 }
                 catch (ArgumentException e)

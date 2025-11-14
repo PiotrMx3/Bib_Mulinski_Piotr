@@ -4,21 +4,15 @@
     {
         static void Main(string[] args)
         {
-            //try
-            //{
-            //    App app = new App();
-            //    app.Run();
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine("Fatal error ! " + e.Message);
-            //}
-
-            Library l = new("test");
-
-            Console.ReadKey();
-
-            l.AcquisitionReadingRoomToday();
+            try
+            {
+                App app = new App();
+                app.Run();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Fatal error ! " + e.Message);
+            }
         }
 
     }

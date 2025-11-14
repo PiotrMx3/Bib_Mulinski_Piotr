@@ -135,6 +135,9 @@ namespace Bib_Mulinski_Piotr
                     case "4":
                         AllBooksByLanguageUi();
                         break;
+                    case "clear":
+                        Console.Clear();
+                        break;
                     case "0":
                         isRunning = false;
                         break;
@@ -370,7 +373,7 @@ namespace Bib_Mulinski_Piotr
 
                     case "3":
                         Console.WriteLine();
-                        Logger.LogInfo($"Huidige Uitgever {book.Publisher} ");
+                        Logger.LogInfo($"Huidige Uitgever: {book.Publisher ?? "Geen"} ");
                         Console.WriteLine();
                         Console.WriteLine();
                         Console.Write("Geef nieuwe Uitgever in: ");
@@ -395,7 +398,7 @@ namespace Bib_Mulinski_Piotr
 
                     case "4":
                         Console.WriteLine();
-                        Logger.LogInfo($"Huidig Genre {EnumUtlis.ToDutchGenre(book.Genre)}");
+                        Logger.LogInfo($"Huidig Genre: {EnumUtlis.ToDutchGenre(book.Genre)}");
                         Console.WriteLine();
                         Console.WriteLine();
                         Console.WriteLine("Geef een nieuwe Genre in: ");
@@ -458,6 +461,9 @@ namespace Bib_Mulinski_Piotr
                     //case "10":
                     //    Console.WriteLine("Optie 10 gekozen.");
                     //    break;
+                    case "clear":
+                        Console.Clear();
+                        break;
                     case "0":
                         isRunning = false;
                         break;
@@ -522,7 +528,7 @@ namespace Bib_Mulinski_Piotr
 
         private void AddBookBytitleAndAuthorUi()
         {
-            Logger.LogInfo("Om een nieuw boek aan te maken geef de titel en auteur in");
+            Logger.LogInfo("Om een nieuw boek aan te maken geef de titel en auteur in :");
             Console.WriteLine();
 
             Console.Write("Geef de titel in: ");
@@ -599,7 +605,9 @@ namespace Bib_Mulinski_Piotr
                         break;
                     case "7":
                         ReadBooksFromCsvUi();
-
+                        break;
+                    case "clear":
+                        Console.Clear();
                         break;
                     case "0":
                         isRunning = false;
