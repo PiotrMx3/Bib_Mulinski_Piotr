@@ -29,12 +29,17 @@ namespace Bib_Mulinski_Piotr
                 Logger.LogSuccess($"Er zijn {_library.LibraryAllBooks.Count - backup.Count} boeken met succes toegevoegd!");
                 Console.WriteLine();
             }
-            catch (Exception e)
+            catch (BookValidationExceptions e)
             {
                 _library.RollBack(backup.ToList<Book>());
                 Logger.LogError("Fout bij het inlezen van CSV. Rollback uitgevoerd", e);
 
                 Console.WriteLine();
+            }
+            catch (Exception)
+            {
+                _library.RollBack(backup.ToList<Book>());
+                throw;
             }
 
 
@@ -338,10 +343,14 @@ namespace Bib_Mulinski_Piotr
                             Console.WriteLine();
                             Logger.LogSuccess("Titel succesvol gewijzigd!");
                         }
-                        catch (Exception e)
+                        catch (BookValidationExceptions e)
                         {
                             Console.WriteLine();
                             Logger.LogError("Fout bij het wijzigen van de titel", e);
+                        }
+                        catch (Exception)
+                        {
+                            throw;
                         }
 
                         break;
@@ -363,10 +372,14 @@ namespace Bib_Mulinski_Piotr
                             Console.WriteLine();
                             Logger.LogSuccess("Auteur succesvol gewijzigd!");
                         }
-                        catch (Exception e)
+                        catch (BookValidationExceptions e)
                         {
                             Console.WriteLine();
                             Logger.LogError("Fout bij het wijzigen van de Auteur", e);
+                        }
+                        catch (Exception)
+                        {
+                            throw;
                         }
 
                         break;
@@ -388,10 +401,14 @@ namespace Bib_Mulinski_Piotr
                             Console.WriteLine();
                             Logger.LogSuccess("Uitgever succesvol gewijzigd!");
                         }
-                        catch (Exception e)
+                        catch (BookValidationExceptions e)
                         {
                             Console.WriteLine();
                             Logger.LogError("Fout bij het wijzigen van de Uitgever", e);
+                        }
+                        catch (Exception)
+                        {
+                            throw;
                         }
 
                         break;
@@ -426,14 +443,18 @@ namespace Bib_Mulinski_Piotr
                             }
                             else
                             {
-                                throw new ArgumentException("Gekozen waarde bestaat niet !");
+                                throw new BookValidationExceptions("Gekozen waarde bestaat niet !");
                             }
 
                         }
-                        catch (Exception e)
+                        catch (BookValidationExceptions e)
                         {
                             Console.WriteLine();
                             Logger.LogError("Fout bij het wijzigen van de Genre", e);
+                        }
+                        catch (Exception)
+                        {
+                            throw;
                         }
 
                         break;
@@ -549,11 +570,14 @@ namespace Bib_Mulinski_Piotr
                 Logger.LogSuccess($"Nieuw boek van {newBook.Author} is toegevoegd");
                 Console.WriteLine();
             }
-            catch (Exception e)
+            catch (BookValidationExceptions e)
             {
-
                 Logger.LogError("", e);
                 Console.WriteLine();
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
         }

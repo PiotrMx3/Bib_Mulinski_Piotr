@@ -26,7 +26,7 @@ namespace Bib_Mulinski_Piotr
 			get { return this._publisher; }
 			private set 
 			{
-                if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Uitgever mag niet leeg zijn !");
+                if (string.IsNullOrWhiteSpace(value)) throw new BookRequiredFieldException("Uitgever mag niet leeg zijn !");
 
                 this._publisher = value;
 			}
@@ -37,7 +37,7 @@ namespace Bib_Mulinski_Piotr
 			get { return _title; }
 			private set
 			{
-                if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Titel mag niet leeg zijn !");
+                if (string.IsNullOrWhiteSpace(value)) throw new BookRequiredFieldException("Titel mag niet leeg zijn !");
 
                 this._title = value;
 			}

@@ -24,7 +24,7 @@ namespace Bib_Mulinski_Piotr
             get { return this._year; }
             private set
             {
-                if(value > 2500) throw new ArgumentException("Het jaartal is maximaal 2500.");
+                if(value > 2500) throw new BookValueOutOfRangeException("Het jaartal is maximaal 2500.");
                 this._year = value;
             }
         }
@@ -35,7 +35,7 @@ namespace Bib_Mulinski_Piotr
             get { return this._month; }
             private set
             {
-                if (value < 1 || value > 12) throw new ArgumentException("De maand moet tussen 1 en 12 zijn.");
+                if (value < 1 || value > 12) throw new BookValueOutOfRangeException("De maand moet tussen 1 en 12 zijn.");
                 this._month = value;
             }
         }

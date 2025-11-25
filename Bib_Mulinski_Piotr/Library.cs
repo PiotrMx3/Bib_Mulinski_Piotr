@@ -50,7 +50,7 @@ namespace Bib_Mulinski_Piotr
 
         public void AcquisitionReadingRoomToday()
         {
-            // Geeft een object terug met enkel de datum, de tijd staat op 00:00:00
+            // Geeft een object terug met enkel de datum de tijd staat op 00:00:00
             DateTime dateToday = DateTime.Now.Date;
 
             var builder = ImmutableList.CreateBuilder<ReadingRoomItem>();
@@ -178,10 +178,14 @@ namespace Bib_Mulinski_Piotr
                     Logger.LogSuccess($"Maandblad - {m.Identification} is toegevoegd !");
                     Console.WriteLine();
                 }
-                catch (ArgumentException e)
+                catch (BookValidationExceptions e)
                 {
                     Logger.LogError("Fout bij het aanmaken van het magazine", e);
                     Console.WriteLine();
+                }
+                catch (Exception)
+                {
+                    throw;
                 }
             }
             else
@@ -219,10 +223,14 @@ namespace Bib_Mulinski_Piotr
                     Console.WriteLine();
 
                 }
-                catch (ArgumentException e)
+                catch (BookValidationExceptions e)
                 {
                     Logger.LogError("Fout bij het aanmaken van de krant", e);
                     Console.WriteLine();
+                }
+                catch (Exception)
+                {
+                    throw;
                 }
             }
             else
