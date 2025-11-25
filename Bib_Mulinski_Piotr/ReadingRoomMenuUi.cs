@@ -67,7 +67,7 @@ namespace Bib_Mulinski_Piotr
                 }
 
             }
-
+               //TODO: test task/exception
             Console.WriteLine();
         }
     }
