@@ -103,7 +103,7 @@ namespace Bib_Mulinski_Piotr
 
             if (allNewspapers.Count == 0)
             {
-                Logger.LogInfo("Er zijn geen magzines in de leeszaal");
+                Logger.LogInfo("Er zijn geen kranten in de leeszaal");
             }
             else
             {

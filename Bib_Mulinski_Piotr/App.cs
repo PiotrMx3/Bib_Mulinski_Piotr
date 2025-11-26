@@ -72,13 +72,13 @@ namespace Bib_Mulinski_Piotr
             {
                 Logger.LogInfo("Welkom bij het bibliotheekbeheersysteem \nOm te beginnen geef de naam van jouw bib in: ");
 
-                bibName = Console.ReadLine() ?? "";
+                bibName = (Console.ReadLine() ?? "").Trim();
                 Console.WriteLine();
 
                 if (string.IsNullOrWhiteSpace(bibName)) Logger.LogError("Naam van bib mag niet leeg zijn !");
                 Console.WriteLine();
 
-            } while (bibName == "");
+            } while (string.IsNullOrWhiteSpace(bibName));
 
             Library library = new(bibName);
 
