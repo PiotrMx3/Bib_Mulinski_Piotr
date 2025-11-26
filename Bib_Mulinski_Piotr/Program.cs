@@ -11,7 +11,7 @@
             }
             catch (Exception e)
             {
-                Console.WriteLine("Fatal error ! " + e.Message);
+                Console.WriteLine("Fatal error ! " + e.StackTrace);
             }
         }
 
