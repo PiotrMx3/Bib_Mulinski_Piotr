@@ -253,12 +253,12 @@ namespace Bib_Mulinski_Piotr
             if (!Guid.TryParse(guid.Trim(), out Guid correctGuid))
                 return null;
 
-            Book? bookToEdit = LibraryAllBooks.Find(el => el.LibraryBookGuid == correctGuid);
+            Book? findedBook = LibraryAllBooks.Find(el => el.LibraryBookGuid == correctGuid);
 
-            if (bookToEdit != null)
+            if (findedBook != null)
             {
 
-                return bookToEdit;
+                return findedBook;
             }
 
             return null;

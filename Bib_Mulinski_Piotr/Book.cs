@@ -95,7 +95,7 @@ namespace Bib_Mulinski_Piotr
             IsAvailable = false;
 
             Logger.LogSuccess($"Het boek dient ten laatste teruggebracht te worden op {BorrowingDate.AddDays(BorrowDays).ToString("dddd d MMMM yyyy", new CultureInfo("nl-BE"))}.");
-
+            Console.WriteLine();
 
         }
 
@@ -121,7 +121,7 @@ namespace Bib_Mulinski_Piotr
 
         }
 
-        //
+        // Interface ILendable
 
         public Library Library
         {
@@ -244,7 +244,7 @@ namespace Bib_Mulinski_Piotr
 
         public string ShortDescribe()
         {
-            return $"{Title} - {Author} | ISBN: {Isbn ?? "[LEEG]"} | GUID: {LibraryBookGuid}";
+            return $"{Title} - {Author} | ISBN: {Isbn ?? "[LEEG]"} | GUID: {LibraryBookGuid} | Leenbaar: {(IsAvailable ? "Ja" : "Nee")}";
         }
 
         public string Describe()
