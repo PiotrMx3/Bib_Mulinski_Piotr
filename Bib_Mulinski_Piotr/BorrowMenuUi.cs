@@ -26,7 +26,7 @@ namespace Bib_Mulinski_Piotr
             while (isRunning)
             {
                 Logger.LogInfo("==== Ontleen Menu ====\n\n" +
-                    "Om een boek te lenen / terugbrengen moet je steeds de GUID ingeven");
+                    "Om een boek terugbrengen moet je steeds de GUID ingeven");
                 Console.WriteLine();
                 Console.WriteLine();
                 Console.WriteLine("1. Toon beschikbare boeken & Leen uit ");
@@ -47,6 +47,9 @@ namespace Bib_Mulinski_Piotr
                     case "2":
                         break;
                     case "3":
+                        break;
+                    case "clear":
+                        Console.Clear();
                         break;
                     case "0":
                         isRunning = false;
@@ -76,6 +79,7 @@ namespace Bib_Mulinski_Piotr
 
                     existingBooksGroup.TotalCount++;
 
+
                     if (book.IsAvailable)
                     {
                         existingBooksGroup.AddAvailableBook(book);
@@ -101,23 +105,79 @@ namespace Bib_Mulinski_Piotr
 
             }
 
-            bookGroup.ToImmutable();
 
-            Console.WriteLine();
-            Logger.LogInfo("Beschikbaare Boeken");
-            Console.WriteLine();
-            Console.WriteLine();
-            int counter = 1;
+            // Hier wordt gefilterd op boekgroepen die effectief een lijst met boeken bevatten
+            List<BooksGroup> groupList = new();
 
-            // TODO: Maak een lijst aan van de groepen om selectie via index mogelijk te maken.
-
-            foreach (BooksGroup group in bookGroup.Values)
+            foreach (var group in bookGroup)
             {
-                Console.WriteLine($"{counter}. {group.Title}");
+                if (group.Value.AvailableBooks.Count > 0)
+                {
+                    groupList.Add(group.Value);
+                }
+            }
+
+            if (groupList.Count == 0)
+            {
+                Logger.LogInfo("Helaas, alle boeken zijn momenteel uitgeleend!");
+                Console.WriteLine();
+                Console.WriteLine();
+                return;
+            }
+
+
+            groupList.Sort((a, b) => a.Title.CompareTo(b.Title));
+
+            Console.WriteLine();
+            Logger.LogInfo("Beschikbare Boeken");
+            Console.WriteLine();
+            Console.WriteLine();
+
+
+            int counter = 1;
+            foreach (var group in groupList)
+            {
+                string author = group.AvailableBooks[0].Author;
+
+                Console.WriteLine($"{counter}. {author} -- {group.Title}");
+
                 Console.WriteLine($"   ISBN: {group.Isbn} | Beschikbaar: {group.AvailableCount} / {group.TotalCount}");
+                Console.WriteLine();
                 counter++;
             }
 
+            Logger.LogInfo("Geef het nummer in om een boek te lenen.");
+            Console.WriteLine();
+
+            string userChoice = (Console.ReadLine() ?? "").Trim();
+            Console.WriteLine();
+
+
+            if (int.TryParse(userChoice, out int parsedResult)
+                && parsedResult > 0
+                && parsedResult <= groupList.Count)
+            {
+                int index = parsedResult - 1;
+
+                Book bookToBorrow = groupList[index].AvailableBooks[0];
+                bookToBorrow.Borrow();
+
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("--------------------------------------------------");
+                Console.WriteLine($" GUID: {bookToBorrow.LibraryBookGuid}");
+                Console.WriteLine(" (Bewaar deze GUID om het boek terug te brengen)");
+                Console.WriteLine("--------------------------------------------------");
+                Console.ResetColor();
+                Console.WriteLine();
+
+            }
+            else
+            {
+                Logger.LogError("Ongeldige keuze probeer het opnieuw!");
+                Console.WriteLine();
+            }
+            
 
         }
 

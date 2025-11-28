@@ -51,7 +51,10 @@ namespace Bib_Mulinski_Piotr
             Console.WriteLine();
             Console.WriteLine();
 
-            foreach (Book book in _library.LibraryAllBooks)
+            List<Book> sorted = _library.LibraryAllBooks.ToList();
+            sorted.Sort((a, b) => a.Title.CompareTo(b.Title));
+
+            foreach (Book book in sorted)
             {
                 Console.WriteLine($"{book.Describe()}");
             }

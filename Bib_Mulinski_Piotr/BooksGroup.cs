@@ -12,6 +12,7 @@ namespace Bib_Mulinski_Piotr
         private string _title = "";
         private string _isbn = "";
         private int _totalCount;
+
         // IEnumerable is read-only. Je kunt er alleen doorheen loopen (foreach).
         // ICollection erft van IEnumerable en voegt functionaliteit toe om data te WIJZIGEN (Add, Remove, Count).
         private ICollection<Book> _availableBooks = new List<Book>();

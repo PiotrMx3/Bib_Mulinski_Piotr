@@ -23,7 +23,12 @@ namespace Bib_Mulinski_Piotr
             this._menuReadingRoom = new ReadingRoomMenuUi(this._library);
             this._borrowMenuUi = new BorrowMenuUi(this._library);
 
-            MockBooks();
+
+            for (int i = 0; i < 5; i++)
+            {
+                MockBooks();
+            }
+
 
             bool isRunning = true;
 
@@ -35,8 +40,6 @@ namespace Bib_Mulinski_Piotr
                 Console.WriteLine("1. Biobliotheek Menu");
                 Console.WriteLine("2. Leeszaal Menu");
                 Console.WriteLine("3. Leen Menu");
-
-
                 Console.WriteLine("0. Afsluiten");
                 Console.WriteLine();
                 Console.Write("Maak een keuze: ");

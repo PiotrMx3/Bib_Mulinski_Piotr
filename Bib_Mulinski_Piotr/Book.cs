@@ -262,6 +262,7 @@ namespace Bib_Mulinski_Piotr
                    $"{"ISBN",-20}: {Isbn ?? "[LEEG]"}\n" +
                    $"{"Cover",-20}: {EnumUtlis.ToDutchCover(CoverType)}\n" +
                    $"{"Land oorspr.",-20}: {EnumUtlis.ToDutchCountry(OriginCountry)}\n" +
+                   $"{"Beschikbaar",-20}: {(IsAvailable ? "Ja" : "Nee")}\n" +
                    $"";
         }
 
