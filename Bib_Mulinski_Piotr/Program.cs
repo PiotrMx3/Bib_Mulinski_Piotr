@@ -4,15 +4,15 @@
     {
         static void Main(string[] args)
         {
-            try
-            {
+            //try
+            //{
                 App app = new App();
                 app.Run();
-        }
-            catch (Exception e)
-            {
-                Console.WriteLine("Fatal error ! " + e);
-            }
+        //}
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine("Fatal error ! " + e);
+        //    }
 }
 
     }

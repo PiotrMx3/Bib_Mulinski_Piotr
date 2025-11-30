@@ -599,7 +599,7 @@ namespace Bib_Mulinski_Piotr
 
         private void AddBookBytitleAndAuthorUi()
         {
-            Logger.LogInfo("Om een nieuw boek aan te maken geef de titel en auteur in :");
+            Logger.LogInfo("Om een nieuw boek aan te maken geef de titel, auteur en ISBN in :");
             Console.WriteLine();
 
             Console.Write("Geef de titel in: ");
@@ -607,6 +607,9 @@ namespace Bib_Mulinski_Piotr
 
             Console.Write("Geef de auteur in: ");
             string userAuthor = Console.ReadLine() ?? "";
+
+            Console.Write("Geef de ISBN in (10 of 13 tekens): ");
+            string userIsbn = Console.ReadLine() ?? "";
             Console.WriteLine();
 
             // Klasse Book bevat validaties in de setter.
@@ -616,7 +619,7 @@ namespace Bib_Mulinski_Piotr
             {
                 // Hier had ik ook book kunnen toevoegen via _library.AddBook()
 
-                Book newBook = new Book(userTitle, userAuthor, _library);
+                Book newBook = new Book(userTitle, userAuthor, userIsbn, _library);
                 Logger.LogSuccess($"Nieuw boek van {newBook.Author} is toegevoegd");
                 Console.WriteLine();
             }

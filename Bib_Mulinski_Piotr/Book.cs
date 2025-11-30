@@ -26,13 +26,13 @@ namespace Bib_Mulinski_Piotr
         private int _borrowDays;
 
 
-        public Book(string title, string author, Library library)
+        public Book(string title, string author, string isbn, Library library)
         {
             Title = title.Trim();
             Author = author.Trim();
             Library = library;
             LibraryBookGuid = Guid.NewGuid();
-
+            Isbn = isbn.Trim();
             IsAvailable = true;
             Library.AddBook(this);
         }

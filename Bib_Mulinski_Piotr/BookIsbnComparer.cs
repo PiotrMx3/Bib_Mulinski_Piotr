@@ -9,10 +9,11 @@ namespace Bib_Mulinski_Piotr
 {
     internal class BookIsbnComparer : IEqualityComparer<Book>
     {
-        //TODO: UML
-        // Relatie LibraryMenuUi
+
         public bool Equals(Book? x, Book? y)
         {
+            if (ReferenceEquals(x, y)) return true;
+
             if (x is null || y is null) return false;
 
             return x.Isbn == y.Isbn;

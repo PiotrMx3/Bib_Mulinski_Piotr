@@ -301,12 +301,12 @@ namespace Bib_Mulinski_Piotr
             {
                 string[] booksLine = booksFromCsv[i].Split(',');
 
-                if (booksLine.Length < 2 || string.IsNullOrWhiteSpace(booksLine[0]) || string.IsNullOrWhiteSpace(booksLine[1]))
+                if (booksLine.Length < 3 || string.IsNullOrWhiteSpace(booksLine[0]) || string.IsNullOrWhiteSpace(booksLine[1]) || string.IsNullOrWhiteSpace(booksLine[2]))
                 {
-                    throw new BookValidationExceptions($"Regel {i + 1}: onjuist CSV-formaat (verwacht minimaal 2 velden: Titel, Auteur). Corrigeer en probeer het opnieuw.");
+                    throw new BookValidationExceptions($"Regel {i + 1}: onjuist CSV-formaat (verwacht minimaal 3 velden: Titel, Auteur en ISBN). Corrigeer en probeer het opnieuw.");
                 }
 
-                Book newBook = new Book(booksLine[0], booksLine[1], this);
+                Book newBook = new Book(booksLine[0], booksLine[1], booksLine[2], this);
 
             }
 

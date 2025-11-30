@@ -1,20 +1,20 @@
-1984,George Orwell
-To Kill a Mockingbird,Harper Lee
-The Hobbit,J.R.R. Tolkien
-Pride and Prejudice,Jane Austen
-The Catcher in the Rye,J.D. Salinger
-The Great Gatsby,F. Scott Fitzgerald
-Moby Dick,Herman Melville
-War and Peace,Leo Tolstoy
-Crime and Punishment,Fyodor Dostoevsky
-Brave New World,Aldous Huxley
-The Lord of the Rings,J.R.R. Tolkien
-The Alchemist,Paulo Coelho
-Jane Eyre,Charlotte Brontë
-The Picture of Dorian Gray,Oscar Wilde
-Fahrenheit 451,Ray Bradbury
-Animal Farm,George Orwell
-Dracula,Bram Stoker
-Frankenstein,Mary Shelley
-The Chronicles of Narnia,C.S. Lewis
-Les Misérables,Victor Hugo
+1984,George Orwell,9780451524935
+To Kill a Mockingbird,Harper Lee,9780061120084
+The Hobbit,J.R.R. Tolkien,9780547928227
+Pride and Prejudice,Jane Austen,9780141439518
+The Catcher in the Rye,J.D. Salinger,9780316769488
+The Great Gatsby,F. Scott Fitzgerald,9780743273565
+Moby Dick,Herman Melville,9781503280786
+War and Peace,Leo Tolstoy,9781400079988
+Crime and Punishment,Fyodor Dostoevsky,9780140449136
+Brave New World,Aldous Huxley,9780060850524
+The Lord of the Rings,J.R.R. Tolkien,9780544001159
+The Alchemist,Paulo Coelho,9780062315007
+Jane Eyre,Charlotte Brontë,9780141439518
+The Picture of Dorian Gray,Oscar Wilde,9780141439570
+Fahrenheit 451,Ray Bradbury,9781451673319
+Animal Farm,George Orwell,9780451526342
+Dracula,Bram Stoker,9780486411095
+Frankenstein,Mary Shelley,9780486282114
+The Chronicles of Narnia,C.S. Lewis,9780066238500
+Les Misérables,Victor Hugo,9780451419439
