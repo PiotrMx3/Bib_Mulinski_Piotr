@@ -13,6 +13,7 @@ namespace Bib_Mulinski_Piotr
         private Library _library = null!;
         private LibraryMenuUi _menuLibrary = null!;
         private ReadingRoomMenuUi _menuReadingRoom = null!;
+        private BorrowMenuUi _borrowMenuUi = null!;
 
 
         public void Run()
@@ -20,8 +21,14 @@ namespace Bib_Mulinski_Piotr
             this._library = InitBibNameUi();
             this._menuLibrary = new LibraryMenuUi(this._library);
             this._menuReadingRoom = new ReadingRoomMenuUi(this._library);
+            this._borrowMenuUi = new BorrowMenuUi(this._library);
 
-            MockBooks();
+
+            for (int i = 0; i < 5; i++)
+            {
+                MockBooks();
+            }
+
 
             bool isRunning = true;
 
@@ -32,6 +39,7 @@ namespace Bib_Mulinski_Piotr
                 Console.WriteLine();
                 Console.WriteLine("1. Biobliotheek Menu");
                 Console.WriteLine("2. Leeszaal Menu");
+                Console.WriteLine("3. Leen Menu");
                 Console.WriteLine("0. Afsluiten");
                 Console.WriteLine();
                 Console.Write("Maak een keuze: ");
@@ -47,6 +55,9 @@ namespace Bib_Mulinski_Piotr
                         break;
                     case "2":
                         _menuReadingRoom.ShowReadingRoomMenuUi();
+                        break;
+                    case "3":
+                        _borrowMenuUi.ShowBorrowMenuUi();
                         break;
                     case "clear":
                         Console.Clear();
@@ -72,13 +83,13 @@ namespace Bib_Mulinski_Piotr
             {
                 Logger.LogInfo("Welkom bij het bibliotheekbeheersysteem \nOm te beginnen geef de naam van jouw bib in: ");
 
-                bibName = Console.ReadLine() ?? "";
+                bibName = (Console.ReadLine() ?? "").Trim();
                 Console.WriteLine();
 
                 if (string.IsNullOrWhiteSpace(bibName)) Logger.LogError("Naam van bib mag niet leeg zijn !");
                 Console.WriteLine();
 
-            } while (bibName == "");
+            } while (string.IsNullOrWhiteSpace(bibName));
 
             Library library = new(bibName);
 

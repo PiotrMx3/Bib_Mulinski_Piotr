@@ -12,8 +12,34 @@ namespace Bib_Mulinski_Piotr
     internal class Library
     {
         private string _name = "";
-        private List<Book> _libraryAllBooks = new();
+        private ICollection<Book> _libraryAllBooks = [];
         private Dictionary<DateTime, ReadingRoomItem> _allReadingRoom = new() { { DateTime.Now, new Magazine("Data News", "Roularta", 9, 2023) }, { DateTime.Now, new NewsPaper("Gazet van Antwerpen", "Mediahuis", new DateTime(2025, 03, 01)) } };
+        private Dictionary<string, ICollection<Guid>> _borrowBooksByUser = new Dictionary<string, ICollection<Guid>>();
+
+        public ImmutableDictionary<string, ICollection<Guid>> BorrowBooksByUser
+        {
+            get { return _borrowBooksByUser.ToImmutableDictionary(); }
+        }
+
+        public void AddBookGuidBorrow(string name, Guid guid)
+        {
+            if (!_borrowBooksByUser.ContainsKey(name))
+            {
+                _borrowBooksByUser.Add(name, new List<Guid>() { guid });
+
+            }
+            else
+            {
+                _borrowBooksByUser[name].Add(guid);            
+            }
+        }
+
+        public void RemoveUserWithEmptyBorrowList(string key)
+        {
+            // Hier doen we geen check, want deze key komt uit BorrowMenuUi
+            // De key is daar al gecontroleerd 
+            _borrowBooksByUser.Remove(key);
+        }
 
 
         // Bibliotheek
@@ -43,6 +69,7 @@ namespace Bib_Mulinski_Piotr
             }
         }
 
+
         // Bibliotheek
 
 
@@ -51,7 +78,7 @@ namespace Bib_Mulinski_Piotr
         public void AcquisitionReadingRoomToday()
         {
             // Geeft een object terug met enkel de datum de tijd staat op 00:00:00
-            DateTime dateToday = DateTime.Now.Date;
+            DateTime dateToday = DateTime.Today.Date;
 
             var builder = ImmutableList.CreateBuilder<ReadingRoomItem>();
 
@@ -103,7 +130,7 @@ namespace Bib_Mulinski_Piotr
 
             if (allNewspapers.Count == 0)
             {
-                Logger.LogInfo("Er zijn geen magzines in de leeszaal");
+                Logger.LogInfo("Er zijn geen kranten in de leeszaal");
             }
             else
             {
@@ -151,16 +178,16 @@ namespace Bib_Mulinski_Piotr
         }
         public void AddMagazine()
         {
-            Console.WriteLine("Wat is de naam van het maandblad ?");
+            Console.Write("Wat is de naam van het maandblad?: ");
             string titleFromUser = (Console.ReadLine() ?? "").Trim();
 
-            Console.WriteLine("Wat is de maand van het maanblad ?");
+            Console.Write("Wat is de maand van het maanblad?: ");
             string monthFromUser = (Console.ReadLine() ?? "").Trim();
 
-            Console.WriteLine("Wat is het jaar van het maanblad ?");
+            Console.Write("Wat is het jaar van het maanblad?: ");
             string yearFromUser = (Console.ReadLine() ?? "").Trim();
 
-            Console.WriteLine("Wat is de uitgeverij van het maandblad ?");
+            Console.Write("Wat is de uitgeverij van het maandblad?: ");
             string publisherFromUser = (Console.ReadLine() ?? "").Trim();
 
             bool isByte = byte.TryParse(monthFromUser, out byte monthParsed);
@@ -173,7 +200,7 @@ namespace Bib_Mulinski_Piotr
                 try
                 {
                     Magazine m = new Magazine(titleFromUser, publisherFromUser, monthParsed, yearParsed);
-                    _allReadingRoom.Add(DateTime.Now, m);
+                    _allReadingRoom.Add(DateTime.Now.Date, m);
 
                     Logger.LogSuccess($"Maandblad - {m.Identification} is toegevoegd !");
                     Console.WriteLine();
@@ -198,13 +225,13 @@ namespace Bib_Mulinski_Piotr
 
         public void AddNewsPaper()
         {
-            Console.WriteLine("Wat is de naam van de krant ?");
+            Console.Write("Wat is de naam van de krant?: ");
             string titleFromUser = (Console.ReadLine() ?? "").Trim();
 
-            Console.WriteLine("Wat is de datum van de krant ? (dd/MM/jjjj)");
+            Console.Write("Wat is de datum van de krant (dd/MM/jjjj)?: ");
             string dateFromUser = (Console.ReadLine() ?? "").Trim();
 
-            Console.WriteLine("Wat is de uitgeverij van de krant ?");
+            Console.Write("Wat is de uitgeverij van de krant?: ");
             string publisherFromUser = (Console.ReadLine() ?? "").Trim();
 
             Console.WriteLine();
@@ -217,7 +244,7 @@ namespace Bib_Mulinski_Piotr
                     // Enkel 'veilig' omdat de invoer hier manueel (en dus traag) gebeurt.
                     NewsPaper np = new NewsPaper(titleFromUser, publisherFromUser, parsedDate);
 
-                    _allReadingRoom.Add(DateTime.Now, np);
+                    _allReadingRoom.Add(DateTime.Now.Date, np);
 
                     Logger.LogSuccess($"Krant - {np.Identification} is toegevoegd !");
                     Console.WriteLine();
@@ -249,16 +276,16 @@ namespace Bib_Mulinski_Piotr
 
         public Book? FindBookByGuid(string guid)
         {
-
-            if (!Guid.TryParse(guid.Trim(), out Guid correctGuid))
+           
+            if (!Guid.TryParse(guid, out Guid correctGuid))
                 return null;
 
-            Book? bookToEdit = LibraryAllBooks.Find(el => el.LibraryBookGuid == correctGuid);
+            Book? findedBook = LibraryAllBooks.Find(el => el.LibraryBookGuid == correctGuid);
 
-            if (bookToEdit != null)
+            if (findedBook != null)
             {
 
-                return bookToEdit;
+                return findedBook;
             }
 
             return null;
@@ -286,13 +313,13 @@ namespace Bib_Mulinski_Piotr
         }
 
 
-        public ImmutableList<Book>? AllBooksByLanguage(BooksEnums.Language lang)
+        public ImmutableList<Book> AllBooksByLanguage(BooksEnums.Language lang)
         {
             return LibraryAllBooks.FindAll(el => el.Language == lang);
         }
 
 
-        public ImmutableList<Book>? AllBooksByAuthor(string author)
+        public ImmutableList<Book> AllBooksByAuthor(string author)
         {
             return LibraryAllBooks.FindAll(el => el.Author.ToLower() == author.Trim().ToLower());
         }
@@ -320,10 +347,12 @@ namespace Bib_Mulinski_Piotr
             if (!Guid.TryParse(guid.Trim(), out Guid correctGuid))
                 return false;
 
-            Book? bookToRemove = _libraryAllBooks.Find(el => el.LibraryBookGuid == correctGuid);
+            Book? bookToRemove = LibraryAllBooks.Find(el => el.LibraryBookGuid == correctGuid);
 
             if (bookToRemove != null)
             {
+                if (!bookToRemove.IsAvailable) return false;
+
                 _libraryAllBooks.Remove(bookToRemove);
                 return true;
             }

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Bib_Mulinski_Piotr
 {
-    internal class Book
+    internal class Book : ILendable
     {
         private string _isbn;
         private string _title;
@@ -20,6 +21,10 @@ namespace Bib_Mulinski_Piotr
         private BooksEnums.Country _originCountry = BooksEnums.Country.Unknown;
         private Guid _libraryBookId;
         private Library _library;
+        private bool _isAvailable;
+        private DateTime _borrowingDate;
+        private int _borrowDays;
+
 
         public Book(string title, string author, Library library)
         {
@@ -28,6 +33,7 @@ namespace Bib_Mulinski_Piotr
             Library = library;
             LibraryBookGuid = Guid.NewGuid();
 
+            IsAvailable = true;
             Library.AddBook(this);
         }
 
@@ -52,9 +58,75 @@ namespace Bib_Mulinski_Piotr
             LibraryBookGuid = Guid.NewGuid();
             Library = library;
 
+            IsAvailable = true;
             Library.AddBook(this);
 
         }
+
+        // Interface ILendable
+        public bool IsAvailable
+        {
+            // De setter is public vanwege de vereisten van de ILendable interface in deze opdracht.
+            // In een productieomgeving zou deze private of protected moeten zijn om het gebruik van de Borrow() methode af te dwingen.
+            // Idem voor BorrowingDate en BorrowDays deze zouden ook private of protected moeten zijn...
+
+            get { return this._isAvailable; }
+            set { this._isAvailable = value; }
+        }
+        public DateTime BorrowingDate
+        {
+            get { return this._borrowingDate; }
+            set { this._borrowingDate = value; }
+        }
+        public int BorrowDays
+        {
+            get { return this._borrowDays; }
+            set { this._borrowDays = value; }
+        }
+
+        public void Borrow()
+        {
+            if (!IsAvailable)
+            {
+                Logger.LogError("Deze boek is niet beschikbaar !");
+                Console.WriteLine();
+                return;
+            }
+
+            BorrowDays = Genre is BooksEnums.Genre.Education ? 20 : 10;
+
+            BorrowingDate = DateTime.Now;
+            IsAvailable = false;
+
+            Logger.LogSuccess($"Het boek dient ten laatste teruggebracht te worden op {BorrowingDate.AddDays(BorrowDays).ToString("dddd d MMMM yyyy", new CultureInfo("nl-BE"))}");
+            Console.WriteLine();
+
+        }
+
+        public void Return()
+        {
+            IsAvailable = true;
+
+            DateTime deadline = BorrowingDate.AddDays(BorrowDays);
+
+            if(DateTime.Now > deadline)
+            {
+                int daysLate = (int)(DateTime.Now - deadline).TotalDays;
+
+                if (daysLate == 0) daysLate = 1;
+
+                Logger.LogError($"Het boek is {daysLate} dag(en) te laat teruggebracht !");
+            }
+            else
+            {
+                Logger.LogSuccess($"Het boek is op tijd teruggebracht !");
+            }
+
+            Console.WriteLine();
+        }
+
+        // Interface ILendable
+
         public Library Library
         {
             get { return _library; }
@@ -90,8 +162,7 @@ namespace Bib_Mulinski_Piotr
             get { return _pages; }
             private set
             {
-                if (value < 0)
-                    throw new BookValueOutOfRangeException("Aantal paginas kan niet negatief zijn.");
+                if (value < 0) throw new BookValueOutOfRangeException("Aantal paginas kan niet negatief zijn");
 
                 _pages = value;
             }
@@ -169,7 +240,7 @@ namespace Bib_Mulinski_Piotr
             private set
             {
                 if (string.IsNullOrWhiteSpace(value)) throw new BookRequiredFieldException("ISBN van boek mag niet leeg zijn !");
-                if (value.Length != 10 && value.Length != 13) throw new InvalidIsbnException("ISBN moet 10 of 13 karakters lang zijn!");
+                if (value.Length != 10 && value.Length != 13) throw new InvalidIsbnException("ISBN moet 10 of 13 karakters lang zijn !");
 
                 _isbn = value;
             }
@@ -177,7 +248,7 @@ namespace Bib_Mulinski_Piotr
 
         public string ShortDescribe()
         {
-            return $"{Title} - {Author} | ISBN: {Isbn ?? "[LEEG]"} | GUID: {LibraryBookGuid}";
+            return $"{Title} - {Author} | ISBN: {Isbn ?? "[LEEG]"} | GUID: {LibraryBookGuid} | Beschikbaar: {(IsAvailable ? "Ja" : "Nee")}";
         }
 
         public string Describe()
@@ -188,16 +259,15 @@ namespace Bib_Mulinski_Piotr
                    $"{"Titel",-20}: {Title}\n" +
                    $"{"Auteur",-20}: {Author}\n" +
                    $"{"Uitgever",-20}: {Publisher ?? "[LEEG]"}\n" +
-                   $"{"Genre",-20}: {EnumUtlis.ToDutchGenre(Genre)}\n" +
+                   $"{"Genre",-20}: {EnumUtils.ToDutchGenre(Genre)}\n" +
                    $"{"Jaar",-20}: {Year}\n" +
                    $"{"Paginas",-20}: {(Pages == 0 ? "[LEEG]" : Pages)}\n" +
-                   $"{"Taal",-20}: {EnumUtlis.ToDutchLang(Language)}\n" +
+                   $"{"Taal",-20}: {EnumUtils.ToDutchLang(Language)}\n" +
                    $"{"ISBN",-20}: {Isbn ?? "[LEEG]"}\n" +
-                   $"{"Cover",-20}: {EnumUtlis.ToDutchCover(CoverType)}\n" +
-                   $"{"Land oorspr.",-20}: {EnumUtlis.ToDutchCountry(OriginCountry)}\n" +
+                   $"{"Cover",-20}: {EnumUtils.ToDutchCover(CoverType)}\n" +
+                   $"{"Land oorspr.",-20}: {EnumUtils.ToDutchCountry(OriginCountry)}\n" +
                    $"";
         }
-
 
     }
 }
