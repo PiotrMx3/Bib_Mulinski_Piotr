@@ -21,31 +21,16 @@
 	$"\n{Date.ToString("dd/MM/yyyy",belgiumCI)}";
 
 
-// Tijdens het implementeren van de leenlogica is er een probleem opgedoken
-   wanneer we over alle boeken itereren, worden ook alle kopieen weergegeven.
-   We moeten daarom een IEqualityComparer implementeren om tijdens de iteratie
-   enkel unieke waarden te behouden.
-
-   https://learn.microsoft.com/pl-pl/dotnet/api/system.collections.generic.iequalitycomparer-1?view=net-10.0
-
-    class BoxEqualityComparer : IEqualityComparer<Box>
-    {
-        public bool Equals(Box? b1, Box? b2)
-        {
-            if (ReferenceEquals(b1, b2))
-                return true;
-
-            if (b2 is null || b1 is null)
-                return false;
-
-            return b1.Height == b2.Height
-                && b1.Length == b2.Length
-                && b1.Width == b2.Width;
-        }
-
-        public int GetHashCode(Box box) => box.Height ^ box.Length ^ box.Width;
-    }
-
 // Nooit elementen uit een collectie verwijderen terwijl je erover iterereert.
 // Maak een nieuwe lijst en voeg alleen toe wat je wil behouden.
 
+// Check inbouwen om te voorkomen dat er een boek wordt verwijderd terwijl het is uitgeleend --> klaar
+
+
+// Je haalt de VALUE uit de dictionary (als interface)
+
+ICollection<Guid> collectieUitBibliotheek = _library.BorrowBooksByUser["Jan"];
+
+// Je gebruikt NEW om een nieuwe lijst te maken op basis van die value
+
+List<Guid> mijnPriveLijst = new List<Guid>(collectieUitBibliotheek);

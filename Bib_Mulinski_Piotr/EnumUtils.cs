@@ -7,7 +7,7 @@ using static Bib_Mulinski_Piotr.BooksEnums;
 
 namespace Bib_Mulinski_Piotr
 {
-    internal class EnumUtlis
+    internal class EnumUtils
     {
 
         public static string ToDutchLang(Language lang)

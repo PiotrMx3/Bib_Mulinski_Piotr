@@ -102,7 +102,7 @@ namespace Bib_Mulinski_Piotr
             else
             {
                 Console.WriteLine();
-                Logger.LogError("Controleer de GUID aub");
+                Logger.LogError("Ongeldige GUID of het boek is momenteel uitgeleend.");
                 Console.WriteLine();
             }
 
@@ -122,6 +122,7 @@ namespace Bib_Mulinski_Piotr
                 Console.WriteLine("2. Zoek een boek op basis van ISBN nummer");
                 Console.WriteLine("3. Zoek alle boeken op basis van auteur");
                 Console.WriteLine("4. Zoek alle boeken op basis van taal");
+                Console.WriteLine("5. Zoek een boek op basis van GUID ");
                 Console.WriteLine("0. Afsluiten");
                 Console.WriteLine();
 
@@ -143,6 +144,9 @@ namespace Bib_Mulinski_Piotr
                     case "4":
                         AllBooksByLanguageUi();
                         break;
+                    case "5":
+                        FindBookByGuidUi();
+                        break;
                     case "clear":
                         Console.Clear();
                         break;
@@ -160,6 +164,41 @@ namespace Bib_Mulinski_Piotr
 
         }
 
+
+        private void FindBookByGuidUi()
+        {
+
+            if (_library.LibraryAllBooks.Count == 0)
+            {
+                Logger.LogError("Bibliotheek bevat geen boeken ! ");
+                Console.WriteLine();
+                return;
+            }
+
+
+            Logger.LogInfo("Om een boek te vinden geef een GUID in: ");
+
+
+            string guidFromUser = (Console.ReadLine() ?? "").Trim();
+
+            Book? foundBook = _library.FindBookByGuid(guidFromUser);
+
+            Console.WriteLine();
+
+            if (foundBook is not null)
+            {
+                Console.WriteLine();
+                Console.WriteLine(foundBook.Describe());
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine();
+                Logger.LogError("Boek niet gevonden !");
+                Console.WriteLine();
+            }
+
+        }
         private void AllBooksByLanguageUi()
         {
             Logger.LogInfo("Geef een gewenste Taal in: ");
@@ -168,7 +207,7 @@ namespace Bib_Mulinski_Piotr
             Console.WriteLine("Beschikbare opties: ");
             Console.WriteLine();
 
-            EnumUtlis.EnumMenuForLang();
+            EnumUtils.EnumMenuForLang();
             Console.WriteLine();
 
             Console.Write("Maak een keuze: ");
@@ -184,7 +223,7 @@ namespace Bib_Mulinski_Piotr
 
                 if (allBooksByLang is not null && allBooksByLang.Count != 0)
                 {
-                    Logger.LogInfo($"Gevonden boeken in {EnumUtlis.ToDutchLang(langFromUser)}");
+                    Logger.LogInfo($"Gevonden boeken in {EnumUtils.ToDutchLang(langFromUser)}");
                     Console.WriteLine();
                     Console.WriteLine();
 
@@ -418,7 +457,7 @@ namespace Bib_Mulinski_Piotr
 
                     case "4":
                         Console.WriteLine();
-                        Logger.LogInfo($"Huidig Genre: {EnumUtlis.ToDutchGenre(book.Genre)}");
+                        Logger.LogInfo($"Huidig Genre: {EnumUtils.ToDutchGenre(book.Genre)}");
                         Console.WriteLine();
                         Console.WriteLine();
                         Console.WriteLine("Geef een nieuwe Genre in: ");
@@ -427,7 +466,7 @@ namespace Bib_Mulinski_Piotr
                         Console.WriteLine("Beschikbare opties: ");
                         Console.WriteLine();
 
-                        EnumUtlis.EnumMenuForGenre();
+                        EnumUtils.EnumMenuForGenre();
                         Console.WriteLine();
                         Console.Write("Kaak een keuze: ");
 

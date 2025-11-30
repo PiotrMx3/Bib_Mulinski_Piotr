@@ -12,9 +12,34 @@ namespace Bib_Mulinski_Piotr
     internal class Library
     {
         private string _name = "";
-        private List<Book> _libraryAllBooks = new();
+        private ICollection<Book> _libraryAllBooks = [];
         private Dictionary<DateTime, ReadingRoomItem> _allReadingRoom = new() { { DateTime.Now, new Magazine("Data News", "Roularta", 9, 2023) }, { DateTime.Now, new NewsPaper("Gazet van Antwerpen", "Mediahuis", new DateTime(2025, 03, 01)) } };
+        private Dictionary<string, ICollection<Guid>> _borrowBooksByUser = new Dictionary<string, ICollection<Guid>>();
 
+        public ImmutableDictionary<string, ICollection<Guid>> BorrowBooksByUser
+        {
+            get { return _borrowBooksByUser.ToImmutableDictionary(); }
+        }
+
+        public void AddBookGuidBorrow(string name, Guid guid)
+        {
+            if (!_borrowBooksByUser.ContainsKey(name))
+            {
+                _borrowBooksByUser.Add(name, new List<Guid>() { guid });
+
+            }
+            else
+            {
+                _borrowBooksByUser[name].Add(guid);            
+            }
+        }
+        // TODO: UML 
+        public void RemoveUserWithEmptyBorrowList(string key)
+        {
+            _borrowBooksByUser.Remove(key);
+        }
+
+        // UML
 
         // Bibliotheek
         public Library(string name)
@@ -42,6 +67,7 @@ namespace Bib_Mulinski_Piotr
                 _name = value;
             }
         }
+
 
         // Bibliotheek
 
@@ -249,8 +275,8 @@ namespace Bib_Mulinski_Piotr
 
         public Book? FindBookByGuid(string guid)
         {
-
-            if (!Guid.TryParse(guid.Trim(), out Guid correctGuid))
+           
+            if (!Guid.TryParse(guid, out Guid correctGuid))
                 return null;
 
             Book? findedBook = LibraryAllBooks.Find(el => el.LibraryBookGuid == correctGuid);
@@ -320,10 +346,12 @@ namespace Bib_Mulinski_Piotr
             if (!Guid.TryParse(guid.Trim(), out Guid correctGuid))
                 return false;
 
-            Book? bookToRemove = _libraryAllBooks.Find(el => el.LibraryBookGuid == correctGuid);
+            Book? bookToRemove = LibraryAllBooks.Find(el => el.LibraryBookGuid == correctGuid);
 
             if (bookToRemove != null)
             {
+                if (!bookToRemove.IsAvailable) return false;
+
                 _libraryAllBooks.Remove(bookToRemove);
                 return true;
             }
