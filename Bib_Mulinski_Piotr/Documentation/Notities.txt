@@ -1,23 +1,36 @@
+// REFERENCE TYPES kunnen gecontroleerd worden met ??
 
--- REFERENCE TYPES kunnen gecontroleerd worden met ??
+//VALUE TYPES: type.HasValue ? type.Value : "Geen waarde"
 
--- VALUE TYPES: type.HasValue ? type.Value : "Geen waarde"
-
--- Enum.GetValues<Language>()) geeft een array terug van alle enums is een generice type 
+//Enum.GetValues<Language>()) geeft een array terug van alle enums is een generice type 
 
 
--- Enum.GetValues(typeof(Language))) maar moet casting geburen enum.GetValues verwacht een type van values dus typeof(Language)
+// Enum.GetValues(typeof(Language))) maar moet casting geburen enum.GetValues verwacht een type van values dus typeof(Language)
 
--- BooksEnums.Language lang = (BooksEnums.Language)langToCast;
+// BooksEnums.Language lang = (BooksEnums.Language)langToCast;
 	
 	Met if (Enum.IsDefined<BooksEnums.Language>(lang)) krijg je true of false. 
 
 	Zo kan je controleren of de gecaste enumwaarde effectief in de enum bestaat.
 
--- <T>.TryParse(value, out <T> correctValue) 
+// <T>.TryParse(value, out <T> correctValue) 
    hiermee kan je veilig controleren of de conversie lukt.
 
--- CultureInfo belgiumCI = new CultureInfo("nl-BE");
+// CultureInfo belgiumCI = new CultureInfo("nl-BE");
 
 	$"\n{Date.ToString("dd/MM/yyyy",belgiumCI)}";
 
+
+// Nooit elementen uit een collectie verwijderen terwijl je erover iterereert.
+// Maak een nieuwe lijst en voeg alleen toe wat je wil behouden.
+
+// Check inbouwen om te voorkomen dat er een boek wordt verwijderd terwijl het is uitgeleend --> klaar
+
+
+// Je haalt de VALUE uit de dictionary (als interface)
+
+ICollection<Guid> collectieUitBibliotheek = _library.BorrowBooksByUser["Jan"];
+
+// Je gebruikt NEW om een nieuwe lijst te maken op basis van die value
+
+List<Guid> mijnPriveLijst = new List<Guid>(collectieUitBibliotheek);

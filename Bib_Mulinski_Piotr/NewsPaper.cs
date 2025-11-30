@@ -29,7 +29,7 @@ namespace Bib_Mulinski_Piotr
             {
                 string[] separatedTitle = Title.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
-                string idTitle = $"{this.Title} met id ";
+                string idTitle = $"- {this.Title} met id ";
 
                 for (int i = 0; i < separatedTitle.Length; i++)
                 {
