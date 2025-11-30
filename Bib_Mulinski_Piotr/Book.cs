@@ -98,7 +98,7 @@ namespace Bib_Mulinski_Piotr
             BorrowingDate = DateTime.Now;
             IsAvailable = false;
 
-            Logger.LogSuccess($"Het boek dient ten laatste teruggebracht te worden op {BorrowingDate.AddDays(BorrowDays).ToString("dddd d MMMM yyyy", new CultureInfo("nl-BE"))}.");
+            Logger.LogSuccess($"Het boek dient ten laatste teruggebracht te worden op {BorrowingDate.AddDays(BorrowDays).ToString("dddd d MMMM yyyy", new CultureInfo("nl-BE"))}");
             Console.WriteLine();
 
         }
@@ -115,7 +115,7 @@ namespace Bib_Mulinski_Piotr
 
                 if (daysLate == 0) daysLate = 1;
 
-                Logger.LogError($"Het boek is {daysLate} dag(en) te laat teruggebracht!");
+                Logger.LogError($"Het boek is {daysLate} dag(en) te laat teruggebracht !");
             }
             else
             {
@@ -162,7 +162,7 @@ namespace Bib_Mulinski_Piotr
             get { return _pages; }
             private set
             {
-                if (value < 0) throw new BookValueOutOfRangeException("Aantal paginas kan niet negatief zijn.");
+                if (value < 0) throw new BookValueOutOfRangeException("Aantal paginas kan niet negatief zijn");
 
                 _pages = value;
             }
@@ -240,7 +240,7 @@ namespace Bib_Mulinski_Piotr
             private set
             {
                 if (string.IsNullOrWhiteSpace(value)) throw new BookRequiredFieldException("ISBN van boek mag niet leeg zijn !");
-                if (value.Length != 10 && value.Length != 13) throw new InvalidIsbnException("ISBN moet 10 of 13 karakters lang zijn!");
+                if (value.Length != 10 && value.Length != 13) throw new InvalidIsbnException("ISBN moet 10 of 13 karakters lang zijn !");
 
                 _isbn = value;
             }

@@ -8,16 +8,13 @@
             {
                 App app = new App();
                 app.Run();
-            }
+        }
             catch (Exception e)
             {
                 Console.WriteLine("Fatal error ! " + e);
             }
-        }
+}
 
     }
 
 }
-
-
-

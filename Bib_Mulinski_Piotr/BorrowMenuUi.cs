@@ -12,7 +12,7 @@ namespace Bib_Mulinski_Piotr
 {
     internal class BorrowMenuUi
     {
-        private Library _library = null!;
+        private Library _library;
 
         public BorrowMenuUi(Library library)
         {
@@ -80,7 +80,7 @@ namespace Bib_Mulinski_Piotr
 
             if (!_library.BorrowBooksByUser.ContainsKey(userName))
             {
-                Logger.LogError($"Geen lener gevonden met de naam '{userName}'.");
+                Logger.LogError($"Geen lener gevonden met de naam '{userName}'");
                 Console.WriteLine();
                 return;
             }
@@ -90,7 +90,7 @@ namespace Bib_Mulinski_Piotr
 
             if (userBooks.Count == 0)
             {
-                Logger.LogInfo("Deze gebruiker heeft geen openstaande leningen.");
+                Logger.LogInfo("Deze gebruiker heeft geen openstaande leningen");
                 Console.ReadLine();
                 return;
             }
@@ -131,7 +131,7 @@ namespace Bib_Mulinski_Piotr
 
                 if (bookToReturn is not null)
                 {
-                    Logger.LogSuccess($"Boek: {bookToReturn.Title} is succesvol teruggebracht.");
+                    Logger.LogSuccess($"Boek: {bookToReturn.Title} is succesvol teruggebracht");
                     bookToReturn.Return();
 
                     // Boeken uit de lijst van de gebruiker verwijderen en als de lijst leeg is,
@@ -163,7 +163,7 @@ namespace Bib_Mulinski_Piotr
             if (_library.BorrowBooksByUser.Count == 0)
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Er zijn geen boeken die geleend zijn.");
+                Console.WriteLine("Er zijn geen boeken die geleend zijn");
                 Console.ResetColor();
                 Console.WriteLine();
                 Console.WriteLine();
@@ -258,7 +258,7 @@ namespace Bib_Mulinski_Piotr
 
             if (groupList.Count == 0)
             {
-                Logger.LogInfo("Helaas, alle boeken zijn momenteel uitgeleend!");
+                Logger.LogInfo("Helaas, alle boeken zijn momenteel uitgeleend !");
                 Console.WriteLine();
                 Console.WriteLine();
                 return;

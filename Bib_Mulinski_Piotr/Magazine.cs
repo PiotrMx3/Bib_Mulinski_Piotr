@@ -18,13 +18,12 @@ namespace Bib_Mulinski_Piotr
             Year = year;
         }
 
-
         public uint Year
         {
             get { return this._year; }
             private set
             {
-                if(value > 2500) throw new BookValueOutOfRangeException("Het jaartal is maximaal 2500.");
+                if(value > 2500) throw new BookValueOutOfRangeException("Het jaartal is maximaal 2500");
                 this._year = value;
             }
         }
@@ -35,7 +34,7 @@ namespace Bib_Mulinski_Piotr
             get { return this._month; }
             private set
             {
-                if (value < 1 || value > 12) throw new BookValueOutOfRangeException("De maand moet tussen 1 en 12 zijn.");
+                if (value < 1 || value > 12) throw new BookValueOutOfRangeException("De maand moet tussen 1 en 12 zijn");
                 this._month = value;
             }
         }
@@ -44,14 +43,14 @@ namespace Bib_Mulinski_Piotr
             get
             {
                 string[] separatedTitle = Title.Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                string idTitle = $"{this.Title} met id ";
+                string idTitle = $"- {this.Title} met id ";
 
                 for (int i = 0; i < separatedTitle.Length; i++)
                 {
                     idTitle += char.ToUpper(separatedTitle[i][0]);
                 }
 
-                DateTime date = new DateTime((int)Year, (int)Month, DateTime.Today.Day);
+                DateTime date = new DateTime((int)Year, (int)Month, 1);
 
                 idTitle += $"{date.Month}{date.Year}";
 

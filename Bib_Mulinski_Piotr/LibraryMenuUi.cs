@@ -102,7 +102,7 @@ namespace Bib_Mulinski_Piotr
             else
             {
                 Console.WriteLine();
-                Logger.LogError("Ongeldige GUID of het boek is momenteel uitgeleend.");
+                Logger.LogError("Ongeldige GUID of het boek is momenteel uitgeleend");
                 Console.WriteLine();
             }
 
@@ -170,7 +170,7 @@ namespace Bib_Mulinski_Piotr
 
             if (_library.LibraryAllBooks.Count == 0)
             {
-                Logger.LogError("Bibliotheek bevat geen boeken ! ");
+                Logger.LogError("Bibliotheek bevat geen boeken !");
                 Console.WriteLine();
                 return;
             }
@@ -261,7 +261,7 @@ namespace Bib_Mulinski_Piotr
             ImmutableList<Book> allBooksByAuthor = _library.AllBooksByAuthor(authorFromUser);
 
             // Distinct geeft een IEnumerable<Book> terug, daarom gebruiken we ToList()
-            // om het om te zetten naar een List<Book>
+            // om het om te casten naar een List<Book>
             List<Book> distincList = allBooksByAuthor.Distinct(new BookIsbnComparer()).ToList();
             distincList.Sort((a, b) => a.Title.CompareTo(b.Title));
 
@@ -446,7 +446,7 @@ namespace Bib_Mulinski_Piotr
                         {
                             book.ChangePublisher(newPublisher);
                             Console.WriteLine();
-                            Logger.LogSuccess("Uitgever succesvol gewijzigd!");
+                            Logger.LogSuccess("Uitgever succesvol gewijzigd !");
                         }
                         catch (BookValidationExceptions e)
                         {
@@ -486,7 +486,7 @@ namespace Bib_Mulinski_Piotr
                                 book.ChangeGenre(newGenre);
 
                                 Console.WriteLine();
-                                Logger.LogSuccess("Genre succesvol gewijzigd!");
+                                Logger.LogSuccess("Genre succesvol gewijzigd !");
                             }
                             else
                             {
