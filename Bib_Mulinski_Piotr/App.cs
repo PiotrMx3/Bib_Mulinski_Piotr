@@ -24,7 +24,7 @@ namespace Bib_Mulinski_Piotr
             this._borrowMenuUi = new BorrowMenuUi(this._library);
 
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 2; i++)
             {
                 MockBooks();
             }

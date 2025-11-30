@@ -248,7 +248,7 @@ namespace Bib_Mulinski_Piotr
 
         public string ShortDescribe()
         {
-            return $"{Title} - {Author} | ISBN: {Isbn ?? "[LEEG]"} | GUID: {LibraryBookGuid} | Leenbaar: {(IsAvailable ? "Ja" : "Nee")}";
+            return $"{Title} - {Author} | ISBN: {Isbn ?? "[LEEG]"} | GUID: {LibraryBookGuid} | Beschikbaar: {(IsAvailable ? "Ja" : "Nee")}";
         }
 
         public string Describe()
@@ -266,7 +266,6 @@ namespace Bib_Mulinski_Piotr
                    $"{"ISBN",-20}: {Isbn ?? "[LEEG]"}\n" +
                    $"{"Cover",-20}: {EnumUtils.ToDutchCover(CoverType)}\n" +
                    $"{"Land oorspr.",-20}: {EnumUtils.ToDutchCountry(OriginCountry)}\n" +
-                   $"{"Beschikbaar",-20}: {(IsAvailable ? "Ja" : "Nee")}\n" +
                    $"";
         }
 

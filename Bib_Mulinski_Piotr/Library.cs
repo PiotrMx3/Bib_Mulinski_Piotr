@@ -33,13 +33,14 @@ namespace Bib_Mulinski_Piotr
                 _borrowBooksByUser[name].Add(guid);            
             }
         }
-        // TODO: UML 
+
         public void RemoveUserWithEmptyBorrowList(string key)
         {
+            // Hier doen we geen check, want deze key komt uit BorrowMenuUi
+            // De key is daar al gecontroleerd 
             _borrowBooksByUser.Remove(key);
         }
 
-        // UML
 
         // Bibliotheek
         public Library(string name)
@@ -312,13 +313,13 @@ namespace Bib_Mulinski_Piotr
         }
 
 
-        public ImmutableList<Book>? AllBooksByLanguage(BooksEnums.Language lang)
+        public ImmutableList<Book> AllBooksByLanguage(BooksEnums.Language lang)
         {
             return LibraryAllBooks.FindAll(el => el.Language == lang);
         }
 
 
-        public ImmutableList<Book>? AllBooksByAuthor(string author)
+        public ImmutableList<Book> AllBooksByAuthor(string author)
         {
             return LibraryAllBooks.FindAll(el => el.Author.ToLower() == author.Trim().ToLower());
         }

@@ -51,7 +51,7 @@ namespace Bib_Mulinski_Piotr
             Console.WriteLine();
             Console.WriteLine();
 
-            List<Book> sorted = _library.LibraryAllBooks.ToList();
+            List<Book> sorted = new List<Book>(_library.LibraryAllBooks);
             sorted.Sort((a, b) => a.Title.CompareTo(b.Title));
 
             foreach (Book book in sorted)
@@ -72,9 +72,9 @@ namespace Bib_Mulinski_Piotr
                 return;
             }
 
-
-            foreach (Book book in _library.LibraryAllBooks)
-
+            List<Book> sorted = new List<Book>(_library.LibraryAllBooks);
+            sorted.Sort((a, b) => a.Title.CompareTo(b.Title));
+            foreach (Book book in sorted)
             {
                 Console.WriteLine($"{book.ShortDescribe()}");
                 Console.WriteLine();
@@ -211,7 +211,6 @@ namespace Bib_Mulinski_Piotr
             Console.WriteLine();
 
             Console.Write("Maak een keuze: ");
-            Console.WriteLine();
 
             string langChoice = (Console.ReadLine() ?? "").Trim();
 
@@ -259,7 +258,13 @@ namespace Bib_Mulinski_Piotr
             Console.Write("Geef de gewenste Auteur van het boek in: ");
             string authorFromUser = (Console.ReadLine() ?? "").Trim();
 
-            ImmutableList<Book>? allBooksByAuthor = _library.AllBooksByAuthor(authorFromUser);
+            ImmutableList<Book> allBooksByAuthor = _library.AllBooksByAuthor(authorFromUser);
+
+            // Distinct geeft een IEnumerable<Book> terug, daarom gebruiken we ToList()
+            // om het om te zetten naar een List<Book>
+            List<Book> distincList = allBooksByAuthor.Distinct(new BookIsbnComparer()).ToList();
+            distincList.Sort((a, b) => a.Title.CompareTo(b.Title));
+
             Console.WriteLine();
 
             if (allBooksByAuthor is not null && allBooksByAuthor.Count != 0)
@@ -268,7 +273,7 @@ namespace Bib_Mulinski_Piotr
                 Console.WriteLine();
                 Console.WriteLine();
 
-                foreach (Book book in allBooksByAuthor)
+                foreach (Book book in distincList)
                 {
                     Console.WriteLine($"{book.Describe()}");
                     Console.WriteLine();
@@ -553,7 +558,10 @@ namespace Bib_Mulinski_Piotr
             }
 
 
-            foreach (Book book in _library.LibraryAllBooks)
+            List<Book> sortedList = new List<Book>(_library.LibraryAllBooks);
+            sortedList.Sort((a, b) => a.Title.CompareTo(b.Title));
+
+            foreach (Book book in sortedList)
             {
                 Console.WriteLine($"{book.ShortDescribe()}");
                 Console.WriteLine();
